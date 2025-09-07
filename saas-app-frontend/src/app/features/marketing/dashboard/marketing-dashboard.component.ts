@@ -2,12 +2,15 @@ import { Component, OnInit, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MarketingService, MarketingCampaign } from '../services/marketing.service';
+import { MarketingMenuComponent } from '../marketing-menu.component';
 
 @Component({
   selector: 'app-marketing-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, MarketingMenuComponent],
   template: `
+    <app-marketing-menu></app-marketing-menu>
+    
     <div class="marketing-dashboard">
       <div class="dashboard-header">
         <h1>Marketing & Analytics Dashboard</h1>
@@ -499,6 +502,10 @@ import { MarketingService, MarketingCampaign } from '../services/marketing.servi
     }
 
     @media (max-width: 768px) {
+      .marketing-dashboard {
+        padding: 1rem;
+      }
+      
       .dashboard-content {
         grid-template-columns: 1fr;
         gap: 2rem;
@@ -507,6 +514,16 @@ import { MarketingService, MarketingCampaign } from '../services/marketing.servi
       .action-buttons {
         flex-direction: column;
         align-items: center;
+      }
+      
+      .dashboard-stats {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .dashboard-stats {
+        grid-template-columns: 1fr;
       }
     }
   `]

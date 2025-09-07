@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, inject, computed } from '@angular/core';
+import { Component, OnInit, signal, inject, computed, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
@@ -33,6 +33,7 @@ export class MainDashboardComponent implements OnInit {
 
   // Signals for reactive state management
   currentUser = this.authService.currentUser;
+  currentTime = signal(new Date());
   dashboardStats = signal<DashboardStats>({
     totalPlans: 0,
     activeWidgets: 0,
@@ -107,6 +108,14 @@ export class MainDashboardComponent implements OnInit {
 
   ngOnInit() {
     this.loadDashboardData();
+    this.setupTimeUpdater();
+  }
+
+  private setupTimeUpdater() {
+    // Update the current time every minute to ensure greetings update
+    setInterval(() => {
+      this.currentTime.set(new Date());
+    }, 60000); // Update every minute
   }
 
   private loadDashboardData() {
@@ -173,9 +182,9 @@ export class MainDashboardComponent implements OnInit {
   }
 
   private getTimeOfDay(): string {
-    const hour = new Date().getHours();
+    const hour = this.currentTime().getHours();
     if (hour < 12) return 'Good morning';
-    if (hour < 17) return 'Good afternoon';
+    if (hour < 18) return 'Good afternoon';
     return 'Good evening';
   }
 

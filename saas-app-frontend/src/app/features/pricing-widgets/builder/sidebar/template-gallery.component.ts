@@ -48,15 +48,21 @@ export class TemplateGalleryComponent {
       '2-column spotlight': '2-column-spotlight',
       'Comparison matrix': 'comparison-matrix'
     };
-    return typeMap[templateName] || 'default';
+    
+    const type = typeMap[templateName] || 'default';
+    console.log('Template name:', templateName, 'Mapped to type:', type);
+    return type;
   }
 
   getTemplateImage(templateName: string): string {
     const imageMap: Record<string, string> = {
-      '3-column classic': 'assets/images/templates/3-column-classic.jpg',
-      '2-column spotlight': 'assets/images/templates/2-column-spotlight.jpg',
-      'Comparison matrix': 'assets/images/templates/comparison-matrix.jpg'
+      '3-column classic': 'assets/templates/3-column-classic.svg',
+      '2-column spotlight': 'assets/templates/2-column-spotlight.svg',
+      'Comparison matrix': 'assets/templates/comparison-matrix.svg'
     };
-    return imageMap[templateName] || 'assets/images/templates/default.jpg';
+    
+    const image = imageMap[templateName] || 'assets/templates/3-column-classic.svg';
+    console.log('Template name:', templateName, 'Mapped to image:', image);
+    return image;
   }
 }

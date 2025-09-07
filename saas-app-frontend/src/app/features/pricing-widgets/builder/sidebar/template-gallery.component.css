@@ -1,126 +1,147 @@
+.gallery-header {
+  margin-bottom: 1.5rem;
+}
+
+.gallery-header h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary, #333);
+}
+
+.gallery-header p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--text-secondary, #666);
+}
+
 .template-gallery {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 1rem;
 }
 
 .template-option {
-  border: 2px solid #e1e5e9;
-  border-radius: 8px;
-  padding: 1rem;
+  border: 1px solid var(--border-color, #e1e5e9);
+  border-radius: var(--radius-md, 6px);
+  background: var(--bg-primary, #fff);
   cursor: pointer;
   transition: all 0.2s ease;
-  background: white;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .template-option:hover {
-  border-color: #007bff;
-  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.1);
+  border-color: var(--accent-color, #007bff);
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+.template-option.blank-template {
+  border-style: dashed;
+  background: var(--bg-secondary, #f8f9fa);
+}
+
+.template-option.blank-template:hover {
+  border-color: var(--accent-color, #007bff);
+  background: var(--bg-secondary, #f0f5ff);
 }
 
 .template-preview {
+  position: relative;
   height: 120px;
-  border: 1px solid #f1f3f4;
-  border-radius: 4px;
-  margin-bottom: 0.75rem;
-  background: #f8f9fa;
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary, #fff);
+  border-bottom: 1px solid var(--border-color, #e1e5e9);
 }
 
 .blank-preview {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
 }
 
-.preview-placeholder {
-  text-align: center;
-  color: #666;
-}
-
-.preview-placeholder span {
+.blank-preview span {
   font-size: 2rem;
-  font-weight: bold;
-  color: #007bff;
-  display: block;
-  margin-bottom: 0.5rem;
+  font-weight: 300;
+  color: var(--text-secondary, #666);
 }
 
-.preview-placeholder p {
+.blank-preview p {
   margin: 0;
   font-size: 0.875rem;
-}
-
-.preview-grid {
-  display: grid;
-  height: 100%;
-  gap: 2px;
-  padding: 4px;
-}
-
-.preview-column {
-  background: white;
-  border-radius: 2px;
-  padding: 2px;
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
-.preview-block {
-  background: #e9ecef;
-  border-radius: 2px;
-  padding: 2px 4px;
-  font-size: 0.625rem;
-  color: #666;
+  color: var(--text-secondary, #666);
   text-align: center;
-  min-height: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.preview-price-card {
-  background: #d4edda;
-  color: #155724;
-}
-
-.preview-feature-list {
-  background: #cce5ff;
-  color: #004085;
-}
-
-.preview-headline {
-  background: #fff3cd;
-  color: #856404;
-}
-
-.preview-subtext {
-  background: #f8d7da;
-  color: #721c24;
-}
-
-.preview-badge {
-  background: #d1ecf1;
-  color: #0c5460;
-}
-
-.preview-divider {
-  background: #e2e3e5;
-  height: 2px;
-  min-height: 2px;
 }
 
 .template-option h4 {
-  margin: 0 0 0.25rem 0;
-  color: #333;
+  margin: 0.75rem 0 0.25rem 0;
+  padding: 0 0.75rem;
   font-size: 0.875rem;
-  font-weight: 600;
+  font-weight: 500;
+  color: var(--text-primary, #333);
 }
 
 .template-option p {
-  margin: 0;
-  color: #666;
+  margin: 0 0 0.75rem 0;
+  padding: 0 0.75rem;
   font-size: 0.75rem;
-  line-height: 1.4;
+  color: var(--text-secondary, #666);
+}
+
+.template-thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.template-type-badge {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm, 4px);
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  background: var(--accent-color, #007bff);
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .template-gallery {
+    grid-template-columns: 1fr;
+  }
+  
+  .template-preview {
+    height: 100px;
+  }
+}
+
+/* Enhanced visual styling */
+.template-option {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.template-option:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.template-option.blank-template:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 123, 255, 0.1);
+}
+
+.template-preview {
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e7f1 100%);
+}
+
+.template-option.blank-template .template-preview {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
 }

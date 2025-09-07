@@ -1,10 +1,11 @@
 <div class="template-thumbnail">
   <img 
-    [ngSrc]="getImageSrc()"
+    [src]="getImageSrc()"
     [alt]="getImageAlt()"
     width="200"
     height="120"
-    priority="false"
     loading="lazy"
-    class="thumbnail-image">
+    class="thumbnail-image loading"
+    (error)="onImageError($event)"
+    (load)="onImageLoad($event)">
 </div>

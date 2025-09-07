@@ -7,7 +7,16 @@ import { ThemeService } from '../../core/services/theme.service';
   selector: 'app-theme-switcher',
   template: `
     <div class="theme-switcher">
-      <h3>Brand Theme</h3>
+      <div class="theme-header">
+        <h3>
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor">
+            <path d="M8 1a7 7 0 100 14A7 7 0 008 1zm0 12a5 5 0 110-10 5 5 0 010 10z"/>
+            <path d="M8 4a4 4 0 100 8 4 4 0 000-8z"/>
+          </svg>
+          Brand Theme
+        </h3>
+        <p>Customize the look and feel of your widgets</p>
+      </div>
       
       <form [formGroup]="themeForm" class="theme-form">
         <!-- Accent Color -->
@@ -97,107 +106,164 @@ import { ThemeService } from '../../core/services/theme.service';
   `,
   styles: [`
     .theme-switcher {
-      padding: 1rem;
+      padding: 1.25rem;
       background: var(--bg-secondary, #f8f9fa);
-      border-radius: var(--radius-md, 8px);
+      border-radius: var(--radius-lg, 12px);
       border: 1px solid var(--border-color, #e0e0e0);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     }
 
-    .theme-switcher h3 {
-      margin: 0 0 1rem 0;
+    .theme-header {
+      margin-bottom: 1.25rem;
+    }
+
+    .theme-header h3 {
+      margin: 0 0 0.5rem 0;
       color: var(--text-primary, #333);
-      font-size: 1.1rem;
+      font-size: 1.125rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .theme-header p {
+      margin: 0;
+      font-size: 0.875rem;
+      color: var(--text-secondary, #666);
+      line-height: 1.5;
     }
 
     .theme-form {
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 1.25rem;
     }
 
     .form-group {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.625rem;
     }
 
     .form-group label {
       font-weight: 500;
       color: var(--text-primary, #333);
-      font-size: 0.9rem;
+      font-size: 0.875rem;
     }
 
     .color-input-group {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.625rem;
       align-items: center;
     }
 
     .color-picker {
-      width: 40px;
-      height: 40px;
+      width: 44px;
+      height: 44px;
       border: none;
-      border-radius: var(--radius-sm, 4px);
+      border-radius: var(--radius-md, 6px);
       cursor: pointer;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     }
 
     .color-text {
       flex: 1;
-      padding: 0.5rem;
+      padding: 0.625rem;
       border: 1px solid var(--border-color, #e0e0e0);
-      border-radius: var(--radius-sm, 4px);
+      border-radius: var(--radius-md, 6px);
       background: var(--bg-primary, #fff);
       color: var(--text-primary, #333);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+    }
+
+    .color-text:focus {
+      outline: none;
+      border-color: var(--accent-color, #007bff);
+      box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
     }
 
     .radius-preview {
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.625rem;
     }
 
     .radius-demo {
       display: inline-block;
-      padding: 0.5rem 1rem;
+      padding: 0.625rem 1.125rem;
       background: var(--accent-color, #3498db);
       color: white;
-      font-size: 0.8rem;
+      font-size: 0.875rem;
       font-weight: 500;
+      border-radius: var(--radius-md, 6px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .radius-slider {
       width: 100%;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.625rem;
+      height: 6px;
+      border-radius: 3px;
+      background: #e0e0e0;
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    .radius-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--accent-color, #3498db);
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .radius-slider::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--accent-color, #3498db);
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     }
 
     .radius-options {
       display: flex;
-      gap: 0.25rem;
+      gap: 0.375rem;
+      flex-wrap: wrap;
     }
 
     .radius-btn {
-      padding: 0.25rem 0.5rem;
+      padding: 0.375rem 0.75rem;
       border: 1px solid var(--border-color, #e0e0e0);
       background: var(--bg-primary, #fff);
       color: var(--text-primary, #333);
-      border-radius: var(--radius-sm, 4px);
+      border-radius: var(--radius-md, 6px);
       cursor: pointer;
-      font-size: 0.8rem;
+      font-size: 0.875rem;
       transition: all 0.2s;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
     }
 
     .radius-btn:hover {
       background: var(--bg-secondary, #f8f9fa);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     }
 
     .radius-btn.active {
       background: var(--accent-color, #3498db);
       color: white;
       border-color: var(--accent-color, #3498db);
+      box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
     }
 
     .toggle-label {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.75rem;
       cursor: pointer;
     }
 
@@ -207,10 +273,10 @@ import { ThemeService } from '../../core/services/theme.service';
 
     .toggle-slider {
       position: relative;
-      width: 40px;
-      height: 20px;
+      width: 44px;
+      height: 22px;
       background: #ccc;
-      border-radius: 20px;
+      border-radius: 22px;
       transition: background 0.3s;
     }
 
@@ -219,11 +285,12 @@ import { ThemeService } from '../../core/services/theme.service';
       position: absolute;
       top: 2px;
       left: 2px;
-      width: 16px;
-      height: 16px;
+      width: 18px;
+      height: 18px;
       background: white;
       border-radius: 50%;
       transition: transform 0.3s;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     }
 
     .toggle-input:checked + .toggle-slider {
@@ -231,31 +298,35 @@ import { ThemeService } from '../../core/services/theme.service';
     }
 
     .toggle-input:checked + .toggle-slider::before {
-      transform: translateX(20px);
+      transform: translateX(22px);
     }
 
     .toggle-text {
       color: var(--text-primary, #333);
-      font-size: 0.9rem;
+      font-size: 0.875rem;
+      font-weight: 500;
     }
 
     .form-actions {
-      margin-top: 0.5rem;
+      margin-top: 0.625rem;
     }
 
     .btn {
-      padding: 0.5rem 1rem;
+      padding: 0.625rem 1.125rem;
       border: 1px solid var(--border-color, #e0e0e0);
       background: var(--bg-primary, #fff);
       color: var(--text-primary, #333);
-      border-radius: var(--radius-sm, 4px);
+      border-radius: var(--radius-md, 6px);
       cursor: pointer;
-      font-size: 0.9rem;
+      font-size: 0.875rem;
       transition: all 0.2s;
+      font-weight: 500;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
     }
 
     .btn:hover {
       background: var(--bg-secondary, #f8f9fa);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     }
 
     .btn-outline {
@@ -266,34 +337,38 @@ import { ThemeService } from '../../core/services/theme.service';
     .btn-outline:hover {
       background: var(--accent-color, #3498db);
       color: white;
+      box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
     }
 
     .currency-toggle {
       display: flex;
-      gap: 0.25rem;
+      gap: 0.375rem;
     }
 
     .currency-btn {
       flex: 1;
-      padding: 0.5rem;
+      padding: 0.625rem;
       border: 1px solid var(--border-color, #e0e0e0);
       background: var(--bg-primary, #fff);
       color: var(--text-primary, #333);
-      border-radius: var(--radius-sm, 4px);
+      border-radius: var(--radius-md, 6px);
       cursor: pointer;
-      font-size: 0.9rem;
+      font-size: 0.875rem;
       font-weight: 500;
       transition: all 0.2s;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
     }
 
     .currency-btn:hover {
       background: var(--bg-secondary, #f8f9fa);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     }
 
     .currency-btn.active {
       background: var(--accent-color, #3498db);
       color: white;
       border-color: var(--accent-color, #3498db);
+      box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2);
     }
   `],
   imports: [CommonModule, ReactiveFormsModule],

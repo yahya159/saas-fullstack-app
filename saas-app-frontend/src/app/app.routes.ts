@@ -51,6 +51,6 @@ export const routes: Routes = [
     loadChildren: () => import('./features/role-management/role-management.routes').then(m => m.roleManagementRoutes),
     canActivate: [AuthGuard]
   },
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
+  { path: '', redirectTo: '/auth/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/auth/login' }
 ];
