@@ -1,0 +1,45 @@
+.language-switcher {
+  display: inline-block;
+}
+
+.locale-select {
+  padding: 0.5rem;
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-radius: var(--radius-sm, 4px);
+  background: var(--bg-primary, #ffffff);
+  color: var(--text-primary, #1a202c);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 120px;
+}
+
+.locale-select:hover {
+  border-color: var(--accent-color, #3b82f6);
+}
+
+.locale-select:focus {
+  outline: none;
+  border-color: var(--accent-color, #3b82f6);
+  box-shadow: var(--focus-ring, 0 0 0 3px rgba(59, 130, 246, 0.3));
+}
+
+.locale-select option {
+  padding: 0.5rem;
+  background: var(--bg-primary, #ffffff);
+  color: var(--text-primary, #1a202c);
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .locale-select {
+    background: var(--bg-primary, #1a1a1a);
+    color: var(--text-primary, #ffffff);
+    border-color: var(--border-color, #404040);
+  }
+  
+  .locale-select option {
+    background: var(--bg-primary, #1a1a1a);
+    color: var(--text-primary, #ffffff);
+  }
+}

@@ -1,0 +1,102 @@
+<div class="wysiwyg-editor">
+  <!-- Toolbar -->
+  <div class="editor-toolbar">
+    <div class="toolbar-section">
+      <h4>Text Formatting</h4>
+      <div class="toolbar-group">
+        <button 
+          *ngFor="let tool of textTools" 
+          [class]="'tool-btn ' + (tool.active ? 'active' : '')"
+          (click)="tool.action()"
+          [title]="tool.name">
+          {{ tool.icon }}
+        </button>
+      </div>
+    </div>
+
+    <div class="toolbar-section">
+      <h4>Layout</h4>
+      <div class="toolbar-group">
+        <button 
+          *ngFor="let tool of layoutTools" 
+          [class]="'tool-btn ' + (tool.active ? 'active' : '')"
+          (click)="tool.action()"
+          [title]="tool.name">
+          {{ tool.icon }}
+        </button>
+      </div>
+    </div>
+
+    <div class="toolbar-section">
+      <h4>Elements</h4>
+      <div class="toolbar-group">
+        <button 
+          *ngFor="let tool of elementTools" 
+          [class]="'tool-btn ' + (tool.active ? 'active' : '')"
+          (click)="tool.action()"
+          [title]="tool.name">
+          {{ tool.icon }}
+        </button>
+      </div>
+    </div>
+
+    <div class="toolbar-section">
+      <h4>Pricing</h4>
+      <div class="toolbar-group">
+        <button 
+          *ngFor="let tool of pricingTools" 
+          [class]="'tool-btn ' + (tool.active ? 'active' : '')"
+          (click)="tool.action()"
+          [title]="tool.name">
+          {{ tool.icon }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Editor Content -->
+  <div class="editor-content">
+    <div class="editor-canvas" 
+         #editorCanvas
+         contenteditable="true"
+         (input)="onContentChange()"
+         (click)="onEditorClick()"
+         [innerHTML]="editorContent()">
+    </div>
+  </div>
+
+  <!-- Properties Panel -->
+  <div class="editor-properties" *ngIf="selectedElement()">
+    <h4>Element Properties</h4>
+    <div class="property-group">
+      <label>Text Color:</label>
+      <input type="color" 
+             [value]="getElementProperty('color') || '#000000'"
+             (change)="onColorChange($event, 'color')">
+    </div>
+    <div class="property-group">
+      <label>Background Color:</label>
+      <input type="color" 
+             [value]="getElementProperty('background-color') || '#ffffff'"
+             (change)="onColorChange($event, 'background-color')">
+    </div>
+    <div class="property-group">
+      <label>Font Size:</label>
+      <input type="range" 
+             min="8" 
+             max="72" 
+             [value]="getElementProperty('font-size') || '16'"
+             (change)="onRangeChange($event, 'font-size')">
+      <span>{{ getElementProperty('font-size') || '16px' }}</span>
+    </div>
+    <div class="property-group">
+      <label>Padding:</label>
+      <input type="range" 
+             min="0" 
+             max="50" 
+             [value]="getElementProperty('padding') || '10'"
+             (change)="onRangeChange($event, 'padding')">
+      <span>{{ getElementProperty('padding') || '10px' }}</span>
+    </div>
+  </div>
+</div>

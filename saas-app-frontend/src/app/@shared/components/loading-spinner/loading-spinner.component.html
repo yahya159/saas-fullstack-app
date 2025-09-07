@@ -1,0 +1,12 @@
+<div 
+  [class]="'loading-spinner' + (overlay ? ' loading-spinner--overlay' : '') + ' loading-spinner--' + size"
+  role="status"
+  [attr.aria-label]="message"
+>
+  <div class="spinner" aria-hidden="true">
+    <div class="spinner__circle"></div>
+  </div>
+  @if (message) {
+    <p class="loading-spinner__message">{{ message }}</p>
+  }
+</div>

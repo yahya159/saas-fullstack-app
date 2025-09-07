@@ -1,0 +1,197 @@
+<div class="feature-management">
+  <header class="feature-header">
+    <div class="header-content">
+      <h1>Feature Management</h1>
+      <p>Configure features and their availability across subscription plans</p>
+      <div class="header-actions">
+        <button class="btn btn-primary" (click)="openCreateFeatureModal()">
+          + Add Feature
+        </button>
+        <button class="btn btn-secondary" (click)="openCreateCategoryModal()">
+          + Add Category
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="feature-content">
+    <!-- Categories and Features -->
+    <div class="features-section">
+      <h2>Available Features</h2>
+      <div class="categories-list">
+        <div *ngFor="let category of featureCategories()" class="category-card">
+          <div class="category-header">
+            <h3>{{ category.name }}</h3>
+            <p>{{ category.description }}</p>
+            <div class="category-actions">
+              <button class="btn btn-sm btn-outline" (click)="editCategory(category)">
+                ✏️ Edit
+              </button>
+              <button class="btn btn-sm btn-danger" (click)="deleteCategory(category.id)">
+                🗑️ Delete
+              </button>
+            </div>
+          </div>
+          
+          <div class="features-list">
+            <div *ngFor="let feature of category.features" class="feature-item">
+              <div class="feature-info">
+                <h4>{{ feature.name }}</h4>
+                <p>{{ feature.description }}</p>
+                <div class="feature-meta">
+                  <span class="feature-type">{{ feature.type }}</span>
+                  <span class="feature-required" *ngIf="feature.required">Required</span>
+                </div>
+              </div>
+              <div class="feature-actions">
+                <button class="btn btn-sm btn-outline" (click)="editFeature(feature)">
+                  ✏️ Edit
+                </button>
+                <button class="btn btn-sm btn-danger" (click)="deleteFeature(feature.id)">
+                  🗑️ Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Plan Feature Configuration -->
+    <div class="plans-section">
+      <h2>Plan Configuration</h2>
+      <div class="plans-list">
+        <div *ngFor="let plan of plans()" class="plan-config-card">
+          <div class="plan-header">
+            <h3>{{ plan.name }}</h3>
+            <p>{{ plan.description }}</p>
+          </div>
+          
+          <div class="plan-features">
+            <div *ngFor="let category of featureCategories()" class="category-section">
+              <h4>{{ category.name }}</h4>
+              <div class="feature-configs">
+                <div *ngFor="let feature of category.features" class="feature-config">
+                  <div class="feature-label">
+                    <label>
+                      <input type="checkbox" 
+                             [checked]="isFeatureEnabled(plan.id, feature.id)"
+                             (change)="onFeatureToggle(plan.id, feature.id, $event)">
+                      {{ feature.name }}
+                    </label>
+                  </div>
+                  <div class="feature-value" *ngIf="isFeatureEnabled(plan.id, feature.id)">
+                    <ng-container [ngSwitch]="feature.type">
+                      <input *ngSwitchCase="'boolean'" 
+                             type="checkbox" 
+                             [checked]="getFeatureValue(plan.id, feature.id)"
+                             (change)="onFeatureValueChange(plan.id, feature.id, $event, 'boolean')">
+                      
+                      <input *ngSwitchCase="'number'" 
+                             type="number" 
+                             [value]="getFeatureValue(plan.id, feature.id)"
+                             (change)="onFeatureValueChange(plan.id, feature.id, $event, 'number')"
+                             [min]="0">
+                      
+                      <input *ngSwitchCase="'text'" 
+                             type="text" 
+                             [value]="getFeatureValue(plan.id, feature.id)"
+                             (change)="onFeatureValueChange(plan.id, feature.id, $event, 'text')"
+                             [placeholder]="feature.description">
+                      
+                      <select *ngSwitchCase="'select'" 
+                              [value]="getFeatureValue(plan.id, feature.id)"
+                              (change)="onFeatureValueChange(plan.id, feature.id, $event, 'select')">
+                        <option *ngFor="let option of feature.options" [value]="option">
+                          {{ option }}
+                        </option>
+                      </select>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Create Feature Modal -->
+  <div *ngIf="showCreateFeatureModal()" class="modal-overlay" (click)="closeCreateFeatureModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>Create New Feature</h3>
+        <button class="btn btn-sm btn-outline" (click)="closeCreateFeatureModal()">×</button>
+      </div>
+      <form [formGroup]="featureForm" (ngSubmit)="createFeature()">
+        <div class="form-group">
+          <label>Feature Name</label>
+          <input type="text" formControlName="name" placeholder="e.g., API Calls">
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea formControlName="description" placeholder="Describe what this feature does"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Category</label>
+          <select formControlName="category">
+            <option *ngFor="let category of featureCategories()" [value]="category.id">
+              {{ category.name }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Type</label>
+          <select formControlName="type" (change)="onFeatureTypeChange()">
+            <option value="boolean">Boolean (Yes/No)</option>
+            <option value="number">Number</option>
+            <option value="text">Text</option>
+            <option value="select">Select (Dropdown)</option>
+          </select>
+        </div>
+        <div class="form-group" *ngIf="featureForm.get('type')?.value === 'select'">
+          <label>Options (one per line)</label>
+          <textarea formControlName="options" placeholder="Option 1&#10;Option 2&#10;Option 3"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Default Value</label>
+          <input type="text" formControlName="defaultValue" placeholder="Default value">
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" formControlName="required"> Required Feature
+          </label>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" (click)="closeCreateFeatureModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" [disabled]="featureForm.invalid">Create Feature</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Create Category Modal -->
+  <div *ngIf="showCreateCategoryModal()" class="modal-overlay" (click)="closeCreateCategoryModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>Create New Category</h3>
+        <button class="btn btn-sm btn-outline" (click)="closeCreateCategoryModal()">×</button>
+      </div>
+      <form [formGroup]="categoryForm" (ngSubmit)="createCategory()">
+        <div class="form-group">
+          <label>Category Name</label>
+          <input type="text" formControlName="name" placeholder="e.g., API Features">
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea formControlName="description" placeholder="Describe this category"></textarea>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-outline" (click)="closeCreateCategoryModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" [disabled]="categoryForm.invalid">Create Category</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

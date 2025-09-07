@@ -9,6 +9,7 @@ import { CanvasComponent } from './canvas/canvas.component';
 import { LivePreviewComponent } from '../preview/live-preview.component';
 import { ExportModalComponent } from '../export/export-modal.component';
 import { ThemeSwitcherComponent } from '../../../shared/components/theme-switcher.component';
+import { WysiwygEditorComponent } from './wysiwyg/wysiwyg-editor.component';
 
 @Component({
   selector: 'app-widget-builder',
@@ -23,7 +24,8 @@ import { ThemeSwitcherComponent } from '../../../shared/components/theme-switche
     CanvasComponent,
     LivePreviewComponent,
     ExportModalComponent,
-    ThemeSwitcherComponent
+    ThemeSwitcherComponent,
+    WysiwygEditorComponent
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true
@@ -35,6 +37,7 @@ export class WidgetBuilderComponent {
   selectedWidget = this.widgetStore.selectedWidget;
   showPreview = signal(false);
   showExportModal = signal(false);
+  editorMode = signal<'visual' | 'wysiwyg'>('visual');
 
   createNewWidget(): void {
     this.widgetStore.createBlankWidget();
@@ -83,5 +86,9 @@ export class WidgetBuilderComponent {
   onWidgetSelect(event: Event): void {
     const target = event.target as HTMLSelectElement;
     this.selectWidget(target.value);
+  }
+
+  toggleEditorMode(): void {
+    this.editorMode.update(mode => mode === 'visual' ? 'wysiwyg' : 'visual');
   }
 }

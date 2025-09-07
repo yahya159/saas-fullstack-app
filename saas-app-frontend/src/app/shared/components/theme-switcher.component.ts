@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
-import { ThemeService } from '../../core/services/theme.service';
+import { ThemeService } from '../../@core/services/theme.service';
 
 @Component({
   selector: 'app-theme-switcher',
@@ -32,8 +32,8 @@ import { ThemeService } from '../../core/services/theme.service';
           <label for="radiusScale">Border Radius Scale</label>
           <div class="radius-preview">
             <div class="radius-demo" 
-                 [style.border-radius]="themeService.radiusScale() + 'px'">
-              {{ themeService.radiusScale() }}px
+                 [style.border-radius]="themeForm.get('radiusScale')?.value + 'px'">
+              {{ themeForm.get('radiusScale')?.value }}px
             </div>
           </div>
           <input 
@@ -48,7 +48,7 @@ import { ThemeService } from '../../core/services/theme.service';
             <button type="button" 
                     *ngFor="let size of radiusOptions" 
                     (click)="setRadiusScale(size)"
-                    [class.active]="themeService.radiusScale() === size"
+                    [class.active]="themeForm.get('radiusScale')?.value === size"
                     class="radius-btn">
               {{ size }}px
             </button>
@@ -57,14 +57,27 @@ import { ThemeService } from '../../core/services/theme.service';
 
         <!-- Dark Mode Toggle -->
         <div class="form-group">
-          <label class="toggle-label">
-            <input 
-              type="checkbox" 
-              formControlName="isDarkMode"
-              class="toggle-input">
-            <span class="toggle-slider"></span>
-            <span class="toggle-text">Dark Mode</span>
-          </label>
+          <label>Theme Mode</label>
+          <div class="theme-mode-toggle">
+            <button type="button" 
+                    (click)="setTheme('light')"
+                    [class.active]="themeService.currentTheme() === 'light'"
+                    class="theme-btn">
+              ☀️ Light
+            </button>
+            <button type="button" 
+                    (click)="setTheme('dark')"
+                    [class.active]="themeService.currentTheme() === 'dark'"
+                    class="theme-btn">
+              🌙 Dark
+            </button>
+            <button type="button" 
+                    (click)="setTheme('auto')"
+                    [class.active]="themeService.currentTheme() === 'auto'"
+                    class="theme-btn">
+              🔄 Auto
+            </button>
+          </div>
         </div>
 
         <!-- Currency Toggle -->
@@ -73,13 +86,13 @@ import { ThemeService } from '../../core/services/theme.service';
           <div class="currency-toggle">
             <button type="button" 
                     (click)="setCurrency('USD')"
-                    [class.active]="themeService.currency() === 'USD'"
+                    [class.active]="selectedCurrency === 'USD'"
                     class="currency-btn">
               USD
             </button>
             <button type="button" 
                     (click)="setCurrency('MAD')"
-                    [class.active]="themeService.currency() === 'MAD'"
+                    [class.active]="selectedCurrency === 'MAD'"
                     class="currency-btn">
               MAD
             </button>
@@ -295,6 +308,34 @@ import { ThemeService } from '../../core/services/theme.service';
       color: white;
       border-color: var(--accent-color, #3498db);
     }
+
+    .theme-mode-toggle {
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    .theme-btn {
+      flex: 1;
+      padding: 0.5rem;
+      border: 1px solid var(--border-color, #e0e0e0);
+      background: var(--bg-primary, #fff);
+      color: var(--text-primary, #333);
+      border-radius: var(--radius-sm, 4px);
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .theme-btn:hover {
+      background: var(--bg-secondary, #f8f9fa);
+    }
+
+    .theme-btn.active {
+      background: var(--accent-color, #3498db);
+      color: white;
+      border-color: var(--accent-color, #3498db);
+    }
   `],
   imports: [CommonModule, ReactiveFormsModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -306,6 +347,7 @@ export class ThemeSwitcherComponent {
 
   themeForm!: FormGroup;
   radiusOptions = [4, 6, 8, 10, 12, 14, 16];
+  selectedCurrency = 'USD';
 
   ngOnInit(): void {
     this.initializeForm();
@@ -314,9 +356,9 @@ export class ThemeSwitcherComponent {
 
   private initializeForm(): void {
     this.themeForm = this.fb.group({
-      accentColor: [this.themeService.accentColor()],
-      accentColorText: [this.themeService.accentColor()],
-      radiusScale: [this.themeService.radiusScale()],
+      accentColor: ['#3b82f6'],
+      accentColorText: ['#3b82f6'],
+      radiusScale: [8],
       isDarkMode: [this.themeService.isDarkMode()]
     });
   }
@@ -324,39 +366,41 @@ export class ThemeSwitcherComponent {
   private setupFormSubscriptions(): void {
     // Accent color changes
     this.themeForm.get('accentColor')?.valueChanges.subscribe(color => {
-      this.themeService.setAccentColor(color);
+      // Update CSS custom properties
+      document.documentElement.style.setProperty('--accent-color', color);
       this.themeForm.get('accentColorText')?.setValue(color, { emitEvent: false });
     });
 
     this.themeForm.get('accentColorText')?.valueChanges.subscribe(color => {
       if (this.isValidColor(color)) {
-        this.themeService.setAccentColor(color);
+        document.documentElement.style.setProperty('--accent-color', color);
         this.themeForm.get('accentColor')?.setValue(color, { emitEvent: false });
       }
     });
 
     // Radius scale changes
     this.themeForm.get('radiusScale')?.valueChanges.subscribe(scale => {
-      this.themeService.setRadiusScale(scale);
-    });
-
-    // Dark mode changes
-    this.themeForm.get('isDarkMode')?.valueChanges.subscribe(isDark => {
-      this.themeService.setDarkMode(isDark);
+      document.documentElement.style.setProperty('--radius-scale', scale + 'px');
     });
   }
 
+  setTheme(theme: 'light' | 'dark' | 'auto'): void {
+    this.themeService.setTheme(theme);
+  }
+
   setRadiusScale(scale: number): void {
-    this.themeService.setRadiusScale(scale);
+    document.documentElement.style.setProperty('--radius-scale', scale + 'px');
     this.themeForm.get('radiusScale')?.setValue(scale);
   }
 
   setCurrency(currency: 'USD' | 'MAD'): void {
-    this.themeService.setCurrency(currency);
+    this.selectedCurrency = currency;
+    // Currency logic can be implemented here
+    console.log('Currency set to:', currency);
   }
 
   resetTheme(): void {
-    this.themeService.resetTheme();
+    this.themeService.setTheme('auto');
     this.initializeForm();
   }
 

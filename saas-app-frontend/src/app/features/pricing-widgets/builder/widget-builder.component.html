@@ -29,6 +29,9 @@
       </div>
     </div>
     <div class="header-right">
+      <button class="btn btn-outline" (click)="toggleEditorMode()">
+        {{ editorMode() === 'visual' ? 'Switch to WYSIWYG' : 'Switch to Visual' }}
+      </button>
       <button class="btn btn-secondary" (click)="togglePreview()">
         {{ showPreview() ? 'Hide Preview' : 'Show Preview' }}
       </button>
@@ -52,7 +55,12 @@
     </aside>
 
     <main class="canvas-area">
-      <app-canvas></app-canvas>
+      <div *ngIf="editorMode() === 'visual'">
+        <app-canvas></app-canvas>
+      </div>
+      <div *ngIf="editorMode() === 'wysiwyg'">
+        <app-wysiwyg-editor></app-wysiwyg-editor>
+      </div>
     </main>
 
     <aside class="right-sidebar">

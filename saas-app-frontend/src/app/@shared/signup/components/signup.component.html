@@ -1,13 +1,31 @@
 <div class="parent">
   <form class="child" [formGroup]="myForm" (ngSubmit)="onFormSubmit(myForm)">
     <p class="title">Create an account</p>
+    
+    @if (isLoading()) {
+      <app-loading-spinner 
+        message="Creating your account..." 
+        size="medium">
+      </app-loading-spinner>
+    }
 
     <div class="name">
       <p> name </p>
       <div>
         <div class="label">
-          <input type="text" formControlName="username" id="username" aria-describedby="username-error">
-          <div class="popup" [class.show]="invalidFields['username']" id="username-error">username is not valid!</div>
+          <input 
+            type="text" 
+            formControlName="username" 
+            id="username" 
+            [class.error]="invalidFields['username']"
+            [attr.aria-invalid]="invalidFields['username']"
+            [attr.aria-describedby]="invalidFields['username'] ? 'username-error' : null"
+            placeholder="Enter your username">
+          @if (invalidFields['username']) {
+            <div class="popup show" id="username-error" role="alert">
+              {{ getFieldError('username') }}
+            </div>
+          }
           <label for="username">Username</label>
         </div>
       </div>
@@ -66,7 +84,16 @@
       <label for="zipCode">Postal / Zip Code</label>
     </div>
     <div class="submit">
-      <input type="submit" value="Submit">
+      <button 
+        type="submit" 
+        [disabled]="isLoading() || myForm.invalid"
+        class="btn btn-primary btn-full">
+        @if (isLoading()) {
+          <span>Creating Account...</span>
+        } @else {
+          <span>Create Account</span>
+        }
+      </button>
     </div>
   </form>
 </div>

@@ -70,6 +70,7 @@ export interface WidgetInstance {
   columns: WidgetColumn[];
   style?: WidgetTemplate['style'];
   attachedPlanId?: string; // plan that supplies tiers/features
+  htmlContent?: string; // WYSIWYG generated HTML content
 }
 
 export interface Catalog {

@@ -1,0 +1,16 @@
+<div class="language-switcher">
+  <label for="locale-select" class="sr-only">Select Language</label>
+  <select 
+    id="locale-select"
+    [value]="currentLocale()"
+    (change)="setLocale($event.target.value)"
+    class="locale-select"
+    aria-label="Select Language"
+  >
+    @for (locale of availableLocales; track locale) {
+      <option [value]="locale">
+        {{ getLocaleFlag(locale) }} {{ getLocaleName(locale) }}
+      </option>
+    }
+  </select>
+</div>
