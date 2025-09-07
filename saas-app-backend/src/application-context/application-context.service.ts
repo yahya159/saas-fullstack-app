@@ -7,5 +7,7 @@ export class CustomerRequestContextService {
   client_id: string;
   @AutoMap()
   client_secret: string;
-  constructor() {}
+  constructor() {
+    // Initialize context service
+  }
 }

@@ -103,11 +103,18 @@ export class WidgetStoreService {
   }
 
   addBlockToColumn(widgetId: string, columnId: string, blockType: WidgetBlockType): WidgetBlock {
+    console.log('Adding block to column:', widgetId, columnId, blockType);
     const widget = this.mockApi.getWidget(widgetId);
-    if (!widget) throw new Error('Widget not found');
+    if (!widget) {
+      console.error('Widget not found:', widgetId);
+      throw new Error('Widget not found');
+    }
 
     const column = widget.columns.find(col => col.id === columnId);
-    if (!column) throw new Error('Column not found');
+    if (!column) {
+      console.error('Column not found:', columnId);
+      throw new Error('Column not found');
+    }
 
     const newBlock: WidgetBlock = {
       id: this.generateId(),
@@ -117,11 +124,14 @@ export class WidgetStoreService {
       style: this.getDefaultStyle(blockType)
     };
 
+    console.log('New block created:', newBlock);
+
     const updatedBlocks = [...column.blocks, newBlock];
     const updatedColumns = widget.columns.map(col =>
       col.id === columnId ? { ...col, blocks: updatedBlocks } : col
     );
 
+    console.log('Updating widget with new block');
     this.mockApi.updateWidget(widgetId, { columns: updatedColumns });
     this.selectedBlockId.set(newBlock.id);
     return newBlock;

@@ -39,4 +39,20 @@ export class PricingWidgetBuilderComponent {
     const template = this.mockApi.getTemplate(templateId);
     return template?.name || 'Unknown';
   }
+
+  getTotalBlocks(template: any): number {
+    return template.columns.reduce((total: number, column: any) => total + column.blocks.length, 0);
+  }
+
+  getBlockPreview(blockType: string): string {
+    const previews: Record<string, string> = {
+      'price-card': '$',
+      'feature-list': '✓',
+      'headline': 'H',
+      'subtext': 'T',
+      'badge': '!',
+      'divider': '—'
+    };
+    return previews[blockType] || 'B';
+  }
 }

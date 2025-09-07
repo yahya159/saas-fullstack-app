@@ -157,8 +157,8 @@ describe('WidgetStoreService - Serialization Tests', () => {
 
       // Check basic HTML structure
       expect(html).toContain('<section class="pricing-widget" role="region" aria-label="Pricing">');
-      expect(html).toContain('<div class="widget-container"');
-      expect(html).toContain('<div class="widget-columns"');
+      expect(html).toContain('<div class="pricing-container"');
+      expect(html).toContain('<div class="pricing-columns"');
       expect(html).toContain('</section>');
 
       // Check grid structure
@@ -172,47 +172,45 @@ describe('WidgetStoreService - Serialization Tests', () => {
 
       expect(html).toContain('role="region"');
       expect(html).toContain('aria-label="Pricing"');
-      expect(html).toContain('role="list"');
+      expect(html).toContain('role="listitem"');
     });
 
     it('should render headline blocks correctly', () => {
       const html = service.exportHtml('widget-1');
 
-      expect(html).toContain('<h2 style="text-align: center; padding: 16px">Choose Your Plan</h2>');
-      expect(html).toContain('<p style="text-align: center; padding: 8px">Select the perfect plan for your needs</p>');
+      expect(html).toContain('<h2 class="pricing-headline"');
+      expect(html).toContain('Choose Your Plan</h2>');
+      expect(html).toContain('<p class="pricing-subtext"');
+      expect(html).toContain('Select the perfect plan for your needs</p>');
     });
 
     it('should render price card blocks with plan data', () => {
       const html = service.exportHtml('widget-1');
 
       // Check for Basic tier price card
-      expect(html).toContain('<h3>Basic</h3>');
-      expect(html).toContain('<div class="price">USD 10/month</div>');
-      expect(html).toContain('<button class="cta-button">Get Started</button>');
+      expect(html).toContain('<h3 class="pricing-card__title">Basic</h3>');
+      expect(html).toContain('<span class="pricing-card__amount">$10</span>');
+      expect(html).toContain('<button class="pricing-button pricing-button--primary"');
 
       // Check for Pro tier price card
-      expect(html).toContain('<h3>Pro</h3>');
-      expect(html).toContain('<div class="price">USD 25/month</div>');
-      expect(html).toContain('<button class="cta-button">Upgrade</button>');
+      expect(html).toContain('<h3 class="pricing-card__title">Pro</h3>');
+      expect(html).toContain('<span class="pricing-card__amount">$25</span>');
     });
 
     it('should render feature list blocks with plan data', () => {
       const html = service.exportHtml('widget-1');
 
-      // Check for Basic tier features
-      expect(html).toContain('<li>API Limit</li>');
-      expect(html).toContain('<li>Storage</li>');
-
-      // Check for Pro tier features
-      expect(html).toContain('<li>Priority Support</li>');
+      // Check for feature lists
+      expect(html).toContain('<li class="pricing-feature">API Limit</li>');
+      expect(html).toContain('<li class="pricing-feature">Storage</li>');
+      expect(html).toContain('<li class="pricing-feature">Priority Support</li>');
     });
 
     it('should render badge blocks correctly', () => {
       const html = service.exportHtml('widget-1');
 
-      // The badge should be rendered somewhere in the HTML
-      expect(html).toContain('Most Popular');
-      expect(html).toContain('class="badge"');
+      // The badge should be rendered in the highlighted tier
+      expect(html).toContain('<span class="pricing-badge">Popular</span>');
     });
 
     it('should apply widget-level styles', () => {
@@ -422,13 +420,13 @@ describe('WidgetStoreService - Serialization Tests', () => {
 
       // Check for semantic HTML elements
       expect(html).toContain('<section class="pricing-widget" role="region" aria-label="Pricing">');
-      expect(html).toContain('<ul class="widget-column" role="list"');
-      expect(html).toContain('<article class="price-card');
-      expect(html).toContain('<h2 style="text-align: center; padding: 16px">Choose Your Plan</h2>');
-      expect(html).toContain('<h3>Basic</h3>');
-      expect(html).toContain('<ul class="feature-list"');
-      expect(html).toContain('<li>');
-      expect(html).toContain('<button class="cta-button"');
+      expect(html).toContain('<div class="pricing-column" role="listitem"');
+      expect(html).toContain('<article class="pricing-card');
+      expect(html).toContain('<h2 class="pricing-headline"');
+      expect(html).toContain('<h3 class="pricing-card__title">Basic</h3>');
+      expect(html).toContain('<ul class="pricing-features"');
+      expect(html).toContain('<li class="pricing-feature">');
+      expect(html).toContain('<button class="pricing-button');
     });
   });
 });

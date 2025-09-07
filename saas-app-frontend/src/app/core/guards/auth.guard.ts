@@ -1,0 +1,47 @@
+import { Injectable, inject } from '@angular/core';
+import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { AuthService } from '../services/auth.service';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthGuard implements CanActivate {
+  private authService = inject(AuthService);
+  private router = inject(Router);
+
+  async canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Promise<boolean> {
+    const isAuthenticated = this.authService.isAuthenticated();
+
+    if (isAuthenticated) {
+      // Check if token is still valid
+      const isTokenValid = await this.authService.validateToken();
+
+      if (isTokenValid) {
+        return true;
+      } else {
+        // Try to refresh token
+        const refreshed = await this.authService.refreshToken();
+
+        if (refreshed) {
+          return true;
+        } else {
+          // Token refresh failed, logout and redirect
+          this.authService.logout();
+          this.router.navigate(['/login'], {
+            queryParams: { returnUrl: state.url }
+          });
+          return false;
+        }
+      }
+    } else {
+      // Not authenticated, redirect to login
+      this.router.navigate(['/login'], {
+        queryParams: { returnUrl: state.url }
+      });
+      return false;
+    }
+  }
+}

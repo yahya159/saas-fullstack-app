@@ -6,12 +6,7 @@ import { SaasApplicationDataModule } from '@Data/saasApplication/saasApplication
 import { MapperServiceModule } from '@Services/mappers/mapper-service.module';
 
 @Module({
-  imports: [
-    HttpModule,
-    SaasworkspaceModule,
-    SaasApplicationDataModule,
-    MapperServiceModule,
-  ],
+  imports: [HttpModule, SaasworkspaceModule, SaasApplicationDataModule, MapperServiceModule],
   providers: [PaymentManager],
   exports: [PaymentManager],
 })

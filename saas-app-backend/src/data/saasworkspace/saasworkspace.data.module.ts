@@ -1,7 +1,7 @@
 import {
   SaasWorkspacePOJO,
-  SaasWorkspaceSchema
-} from '@Data/models/saasworkspace/saasWorkspace.pojo.model'
+  SaasWorkspaceSchema,
+} from '@Data/models/saasworkspace/saasWorkspace.pojo.model';
 
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -19,13 +19,11 @@ import { SaasworkspaceRepository } from './repository/saas-workspace.repository'
       },
     ]),
   ],
-  providers: [SaasworkspaceRepository,
+  providers: [
+    SaasworkspaceRepository,
     SaasWorkspacePaymentsRepository,
-    SaasWorkspacePlanRepository
+    SaasWorkspacePlanRepository,
   ],
-  exports: [SaasworkspaceRepository,
-    SaasWorkspacePaymentsRepository,
-    SaasWorkspacePlanRepository
-  ],
+  exports: [SaasworkspaceRepository, SaasWorkspacePaymentsRepository, SaasWorkspacePlanRepository],
 })
-export class SaasworkspaceModule { }
+export class SaasworkspaceModule {}

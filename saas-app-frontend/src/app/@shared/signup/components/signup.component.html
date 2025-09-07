@@ -1,72 +1,285 @@
-<div class="parent">
-  <form class="child" [formGroup]="myForm" (ngSubmit)="onFormSubmit(myForm)">
-    <p class="title">Create an account</p>
+<div class="signup-container">
+  <div class="signup-card">
+    <!-- Header -->
+    <div class="signup-header">
+      <h1 class="signup-title">Create Your Account</h1>
+      <p class="signup-subtitle">Join our SaaS platform and start your journey</p>
+    </div>
 
-    <div class="name">
-      <p> name </p>
-      <div>
-        <div class="label">
-          <input type="text" formControlName="username" id="username" aria-describedby="username-error">
-          <div class="popup" [class.show]="invalidFields['username']" id="username-error">username is not valid!</div>
-          <label for="username">Username</label>
+    <!-- Social Login Section -->
+    <div class="social-login-section">
+      <button type="button" class="btn-social btn-google" (click)="loginWithGoogle()">
+        <svg class="social-icon" width="20" height="20" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+        </svg>
+        <span>Continue with Google</span>
+      </button>
+
+      <button type="button" class="btn-social btn-microsoft" (click)="loginWithMicrosoft()">
+        <svg class="social-icon" width="20" height="20" viewBox="0 0 24 24">
+          <path fill="#f35325" d="M11.4 11.4H1V1h10.4v10.4z"/>
+          <path fill="#81bc06" d="M23 11.4H12.6V1H23v10.4z"/>
+          <path fill="#05a6f0" d="M11.4 23H1V12.6h10.4V23z"/>
+          <path fill="#ffba08" d="M23 23H12.6V12.6H23V23z"/>
+        </svg>
+        <span>Continue with Microsoft</span>
+      </button>
+    </div>
+
+    <!-- Divider -->
+    <div class="divider">
+      <span class="divider-text">or create account manually</span>
+    </div>
+
+    <!-- Signup Form -->
+    <form [formGroup]="myForm" (ngSubmit)="onFormSubmit(myForm)" class="signup-form">
+
+      <!-- Personal Information Section -->
+      <div class="form-section">
+        <h3 class="section-title">Personal Information</h3>
+
+        <div class="form-grid form-grid-1">
+          <div class="form-group">
+            <label for="username" class="form-label required">Username</label>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="username"
+                formControlName="username"
+                class="form-input"
+                placeholder="Enter your username"
+                aria-describedby="username-error">
+              <div class="error-popup" [class.show]="invalidFields['username']" id="username-error">
+                Username is not valid! Please use only letters, spaces, hyphens, and apostrophes.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-grid form-grid-2">
+          <div class="form-group">
+            <label for="firstname" class="form-label required">First Name</label>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="firstname"
+                formControlName="firstname"
+                class="form-input"
+                placeholder="Your first name"
+                aria-describedby="firstname-error">
+              <div class="error-popup" [class.show]="invalidFields['firstname']" id="firstname-error">
+                First name is required and must contain only letters.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="lastname" class="form-label required">Last Name</label>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="lastname"
+                formControlName="lastname"
+                class="form-input"
+                placeholder="Your last name"
+                aria-describedby="lastname-error">
+              <div class="error-popup" [class.show]="invalidFields['lastname']" id="lastname-error">
+                Last name is required.
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div>
-        <div class="label">
-          <input type="text" formControlName="firstname" id="firstname" aria-describedby="firstname-error">
-          <div class="popup" [class.show]="invalidFields['firstname']" id="firstname-error">firstname is not valid!</div>
-          <label for="firstname">First Name</label>
-        </div>
-        <div class="label">
-          <input type="text" formControlName="lastname" id="lastname" aria-describedby="lastname-error">
-          <div class="popup" [class.show]="invalidFields['lastname']" id="lastname-error">lastname is not valid!</div>
-          <label for="lastname">Last Name</label>
-        </div>
-      </div>
-    </div>
-    <div class="email">
-      <p> Email </p>
-      <input type="email" formControlName="email" id="email" aria-describedby="email-error">
-      <div class="popup" [class.show]="invalidFields['email']" id="email-error">email is not valid!</div>
-      <label for="email">example&#64;example.com</label>
-    </div>
-    <div class="phone">
-      <p> Phone Number </p>
-      <input type="tel" placeholder="(000) 000-000" formControlName="phone" id="phone" aria-describedby="phone-error">
-      <div class="popup" [class.show]="invalidFields['phone']" id="phone-error">phone is not valid!</div>
-    </div>
-    <div class="address">
-      <p> Address </p>
-      <div class="label">
-        <input type="text" formControlName="streetAddr" id="streetAddr" aria-describedby="streetAddr-error">
-        <div class="popup" [class.show]="invalidFields['streetAddr']" id="streetAddr-error">streetAddr is not valid!</div>
-        <label for="streetAddr">Street Address</label>
-      </div>
-      <div class="label">
-        <input type="text" formControlName="streetAddr2" id="streetAddr2" aria-describedby="streetAddr2-error">
-        <div class="popup" [class.show]="invalidFields['streetAddr2']" id="streetAddr2-error">streetAddr2 is not valid!</div>
-        <label for="streetAddr2">Street Address Line 2</label>
-      </div>
-      <div>
-        <div class="label">
-          <input type="text" formControlName="city" id="city" aria-describedby="city-error">
-          <div class="popup" [class.show]="invalidFields['city']" id="city-error">city is not valid!</div>
-          <label for="city">City</label>
-        </div>
-        <div class="label">
-          <input type="text" formControlName="state" id="state" aria-describedby="state-error">
-          <div class="popup" [class.show]="invalidFields['state']" id="state-error">state is not valid!</div>
-          <label for="state">State / Province</label>
+
+      <!-- Contact Information Section -->
+      <div class="form-section">
+        <h3 class="section-title">Contact Information</h3>
+
+        <div class="form-grid form-grid-1">
+          <div class="form-group">
+            <label for="email" class="form-label required">Email Address</label>
+            <div class="input-wrapper">
+              <input
+                type="email"
+                id="email"
+                formControlName="email"
+                class="form-input"
+                placeholder="your.email@example.com"
+                aria-describedby="email-error">
+              <div class="error-popup" [class.show]="invalidFields['email']" id="email-error">
+                Please enter a valid email address.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="phone" class="form-label required">Phone Number</label>
+            <div class="input-wrapper">
+              <input
+                type="tel"
+                id="phone"
+                formControlName="phone"
+                class="form-input"
+                placeholder="(000) 000-0000"
+                aria-describedby="phone-error">
+              <div class="error-popup" [class.show]="invalidFields['phone']" id="phone-error">
+                Please enter a valid phone number.
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div>
-        <input type="text" formControlName="zipCode" id="zipCode" aria-describedby="zipCode-error">
-        <div class="popup" [class.show]="invalidFields['zipCode']" id="zipCode-error">zipCode is not valid!</div>
+
+      <!-- Address Information Section -->
+      <div class="form-section">
+        <h3 class="section-title">Address Information</h3>
+
+        <div class="form-grid form-grid-1">
+          <div class="form-group">
+            <label for="streetAddr" class="form-label required">Street Address</label>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="streetAddr"
+                formControlName="streetAddr"
+                class="form-input"
+                placeholder="123 Main Street"
+                aria-describedby="streetAddr-error">
+              <div class="error-popup" [class.show]="invalidFields['streetAddr']" id="streetAddr-error">
+                Street address is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="streetAddr2" class="form-label required">Address Line 2</label>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="streetAddr2"
+                formControlName="streetAddr2"
+                class="form-input"
+                placeholder="Apartment, suite, unit, etc."
+                aria-describedby="streetAddr2-error">
+              <div class="error-popup" [class.show]="invalidFields['streetAddr2']" id="streetAddr2-error">
+                Address line 2 is required.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-grid form-grid-2">
+          <div class="form-group">
+            <label for="city" class="form-label required">City</label>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="city"
+                formControlName="city"
+                class="form-input"
+                placeholder="Your city"
+                aria-describedby="city-error">
+              <div class="error-popup" [class.show]="invalidFields['city']" id="city-error">
+                City is required and must contain only letters.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="state" class="form-label required">State / Province</label>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="state"
+                formControlName="state"
+                class="form-input"
+                placeholder="Your state or province"
+                aria-describedby="state-error">
+              <div class="error-popup" [class.show]="invalidFields['state']" id="state-error">
+                State/Province is required and must contain only letters.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-grid form-grid-1">
+          <div class="form-group">
+            <label for="zipCode" class="form-label required">Postal / Zip Code</label>
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="zipCode"
+                formControlName="zipCode"
+                class="form-input"
+                placeholder="12345"
+                aria-describedby="zipCode-error">
+              <div class="error-popup" [class.show]="invalidFields['zipCode']" id="zipCode-error">
+                Please enter a valid 5-digit zip code.
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <label for="zipCode">Postal / Zip Code</label>
+
+      <!-- Security Section -->
+      <div class="form-section">
+        <h3 class="section-title">Security</h3>
+
+        <div class="form-grid form-grid-2">
+          <div class="form-group">
+            <label for="password" class="form-label required">Password</label>
+            <div class="input-wrapper">
+              <input
+                type="password"
+                id="password"
+                formControlName="password"
+                class="form-input"
+                placeholder="Create a strong password"
+                aria-describedby="password-error">
+              <div class="error-popup" [class.show]="invalidFields['password']" id="password-error">
+                Password must be at least 6 characters long.
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="confirmPassword" class="form-label required">Confirm Password</label>
+            <div class="input-wrapper">
+              <input
+                type="password"
+                id="confirmPassword"
+                formControlName="confirmPassword"
+                class="form-input"
+                placeholder="Confirm your password"
+                aria-describedby="confirmPassword-error">
+              <div class="error-popup" [class.show]="invalidFields['confirmPassword']" id="confirmPassword-error">
+                Passwords do not match.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="submit-section">
+        <button
+          type="submit"
+          class="submit-btn"
+          [disabled]="!myForm.valid">
+          Create Account
+        </button>
+      </div>
+    </form>
+
+    <!-- Footer -->
+    <div class="signup-footer">
+      <p class="login-link">
+        Already have an account?
+        <a href="/login" routerLink="/login">Sign in here</a>
+      </p>
     </div>
-    <div class="submit">
-      <input type="submit" value="Submit">
-    </div>
-  </form>
+  </div>
 </div>

@@ -11,7 +11,7 @@ export class SaasPaymentMethodConfigurationRepository {
   constructor(
     @InjectModel(SaasPaymentMethodConfigurationPOJO.name)
     private saasPaymentMethodConfigurationModel: Model<SaasPaymentMethodConfigurationDocument>,
-  ) { }
+  ) {}
 
   async getPaymentConfig(paymentMethod: string): Promise<SaasPaymentMethodConfigurationPOJO> {
     const saasPaymentMethodConfigurationPOJO: SaasPaymentMethodConfigurationPOJO =

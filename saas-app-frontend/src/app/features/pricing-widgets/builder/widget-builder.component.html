@@ -42,6 +42,14 @@
     <aside class="left-sidebar">
       <div class="sidebar-section">
         <h3>Templates</h3>
+        <div class="template-selector-container">
+          <select (change)="onTemplateSelect($event)" class="template-selector">
+            <option value="">Create from template...</option>
+            <option *ngFor="let template of templates()" [value]="template.id">
+              {{ template.name }}
+            </option>
+          </select>
+        </div>
         <app-template-gallery></app-template-gallery>
       </div>
       

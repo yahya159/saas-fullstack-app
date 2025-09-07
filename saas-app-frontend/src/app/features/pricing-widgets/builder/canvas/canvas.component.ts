@@ -24,11 +24,21 @@ export class CanvasComponent {
   liveRegionMessage = signal<string>('');
 
   onDrop(event: CdkDragDrop<ColumnBlocks>): void {
+    console.log('Drop event:', event);
     const widget = this.selectedWidget();
-    if (!widget) return;
+    if (!widget) {
+      console.log('No widget selected');
+      return;
+    }
+
+    console.log('Previous container ID:', event.previousContainer.id);
+    console.log('Current container ID:', event.container.id);
+    console.log('Is same container:', event.previousContainer === event.container);
+    console.log('Item data:', event.item.data);
 
     if (event.previousContainer === event.container) {
       // Reordering within the same column
+      console.log('Reordering within same column');
       const column = widget.columns.find(col => col.id === event.container.id);
       if (column) {
         const blocks = [...column.blocks];
@@ -42,14 +52,23 @@ export class CanvasComponent {
       const fromColumnId = event.previousContainer.id;
       const toColumnId = event.container.id;
       
+      console.log('Moving between containers:', fromColumnId, '->', toColumnId);
+      
       if (fromColumnId === 'palette') {
         // Adding new block from palette
+        console.log('Adding new block from palette');
         const blockType = event.item.data as WidgetBlockType;
-        this.widgetStore.addBlockToColumn(widget.id, toColumnId, blockType);
-        const toColumn = widget.columns.find(col => col.id === toColumnId);
-        this.announceToScreenReader(`Added ${blockType} block to column ${toColumn ? toColumn.order + 1 : 'unknown'}`);
+        console.log('Block type:', blockType);
+        if (blockType) {
+          this.widgetStore.addBlockToColumn(widget.id, toColumnId, blockType);
+          const toColumn = widget.columns.find(col => col.id === toColumnId);
+          this.announceToScreenReader(`Added ${blockType} block to column ${toColumn ? toColumn.order + 1 : 'unknown'}`);
+        } else {
+          console.error('Block type is undefined');
+        }
       } else {
         // Moving existing block between columns
+        console.log('Moving existing block between columns');
         const fromColumn = widget.columns.find(col => col.id === fromColumnId);
         const toColumn = widget.columns.find(col => col.id === toColumnId);
         if (fromColumn) {

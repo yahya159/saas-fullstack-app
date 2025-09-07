@@ -1,0 +1,226 @@
+<div class="plan-features-container">
+  <div class="plan-features-header">
+    <h2>Plan Features</h2>
+    <p *ngIf="currentPlan()" class="plan-name">Managing features for: <strong>{{ currentPlan()?.name }}</strong></p>
+    <button
+      class="btn btn-primary add-feature-btn"
+      (click)="openAddFeatureDialog()"
+      [disabled]="loading()">
+      <i class="pi pi-plus"></i>
+      Add Feature
+    </button>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading()" class="loading-state">
+    <i class="pi pi-spinner pi-spin"></i>
+    <span>Loading plan features...</span>
+  </div>
+
+  <!-- Features List -->
+  <div *ngIf="!loading()" class="features-list">
+    <div *ngIf="planFeatures().length === 0" class="empty-state">
+      <i class="pi pi-inbox"></i>
+      <h3>No features assigned</h3>
+      <p>This plan doesn't have any features assigned yet.</p>
+      <button
+        class="btn btn-primary"
+        (click)="openAddFeatureDialog()">
+        Add First Feature
+      </button>
+    </div>
+
+    <div *ngFor="let planFeature of planFeatures()" class="feature-card">
+      <div class="feature-header">
+        <div class="feature-info">
+          <h3 class="feature-name">{{ planFeature.feature.name }}</h3>
+          <span class="feature-role">{{ planFeature.feature.roleId }}</span>
+          <span
+            [class]="'feature-status ' + (planFeature.enabled ? 'enabled' : 'disabled')">
+            {{ planFeature.enabled ? 'Enabled' : 'Disabled' }}
+          </span>
+        </div>
+        <div class="feature-actions">
+          <button
+            class="btn btn-sm"
+            [class.btn-success]="!planFeature.enabled"
+            [class.btn-warning]="planFeature.enabled"
+            (click)="toggleFeatureEnabled(planFeature)"
+            [title]="planFeature.enabled ? 'Disable feature' : 'Enable feature'">
+            <i [class]="planFeature.enabled ? 'pi pi-eye-slash' : 'pi pi-eye'"></i>
+            {{ planFeature.enabled ? 'Disable' : 'Enable' }}
+          </button>
+
+          <button
+            *ngIf="editingFeatureId() !== planFeature._id"
+            class="btn btn-sm btn-secondary"
+            (click)="startEditingFeature(planFeature)"
+            title="Edit configuration">
+            <i class="pi pi-cog"></i>
+            Configure
+          </button>
+
+          <button
+            class="btn btn-sm btn-danger"
+            (click)="removeFeatureFromPlan(planFeature)"
+            title="Remove from plan">
+            <i class="pi pi-trash"></i>
+            Remove
+          </button>
+        </div>
+      </div>
+
+      <!-- Configuration Panel -->
+      <div *ngIf="editingFeatureId() === planFeature._id" class="config-panel">
+        <div class="config-section">
+          <h4>Configuration</h4>
+          <div class="config-fields">
+            <div *ngFor="let key of getConfigKeys(featureConfig())" class="config-field">
+              <label [for]="'config-' + key">{{ key }}</label>
+              <div class="input-group">
+                <input
+                  [id]="'config-' + key"
+                  type="text"
+                  class="form-control"
+                  [value]="featureConfig()[key]"
+                  (input)="updateConfigField(key, $any($event.target).value)">
+                <button
+                  class="btn btn-sm btn-outline-danger"
+                  (click)="removeConfigField(key)"
+                  title="Remove field">
+                  <i class="pi pi-times"></i>
+                </button>
+              </div>
+            </div>
+            <button
+              class="btn btn-sm btn-outline-primary add-field-btn"
+              (click)="addNewConfigField(planFeature)">
+              <i class="pi pi-plus"></i>
+              Add Configuration Field
+            </button>
+          </div>
+        </div>
+
+        <div class="config-section">
+          <h4>Limits</h4>
+          <div class="config-fields">
+            <div *ngFor="let key of getLimitKeys(featureLimits())" class="config-field">
+              <label [for]="'limit-' + key">{{ key }}</label>
+              <div class="input-group">
+                <input
+                  [id]="'limit-' + key"
+                  type="text"
+                  class="form-control"
+                  [value]="featureLimits()[key]"
+                  (input)="updateLimitField(key, $any($event.target).value)">
+                <button
+                  class="btn btn-sm btn-outline-danger"
+                  (click)="removeLimitField(key)"
+                  title="Remove limit">
+                  <i class="pi pi-times"></i>
+                </button>
+              </div>
+            </div>
+            <button
+              class="btn btn-sm btn-outline-primary add-field-btn"
+              (click)="addNewLimitField(planFeature)">
+              <i class="pi pi-plus"></i>
+              Add Limit Field
+            </button>
+          </div>
+        </div>
+
+        <div class="config-actions">
+          <button
+            class="btn btn-success"
+            (click)="saveFeatureConfiguration(planFeature)">
+            <i class="pi pi-check"></i>
+            Save Configuration
+          </button>
+          <button
+            class="btn btn-secondary"
+            (click)="cancelEditingFeature()">
+            <i class="pi pi-times"></i>
+            Cancel
+          </button>
+        </div>
+      </div>
+
+      <!-- Display Current Configuration (when not editing) -->
+      <div *ngIf="editingFeatureId() !== planFeature._id" class="feature-details">
+        <div *ngIf="getConfigKeys(planFeature.configuration).length > 0" class="detail-section">
+          <h5>Configuration</h5>
+          <div class="config-display">
+            <span
+              *ngFor="let key of getConfigKeys(planFeature.configuration)"
+              class="config-item">
+              <strong>{{ key }}:</strong> {{ planFeature.configuration[key] }}
+            </span>
+          </div>
+        </div>
+
+        <div *ngIf="getLimitKeys(planFeature.limits).length > 0" class="detail-section">
+          <h5>Limits</h5>
+          <div class="config-display">
+            <span
+              *ngFor="let key of getLimitKeys(planFeature.limits)"
+              class="config-item">
+              <strong>{{ key }}:</strong> {{ planFeature.limits[key] }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Feature Dialog -->
+  <div *ngIf="showAddFeatureDialog()" class="modal-overlay" (click)="closeAddFeatureDialog()">
+    <div class="modal-dialog" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>Add Feature to Plan</h3>
+        <button class="btn btn-sm btn-ghost" (click)="closeAddFeatureDialog()">
+          <i class="pi pi-times"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div *ngIf="getUnassignedFeatures().length === 0" class="empty-features">
+          <p>All available features are already assigned to this plan.</p>
+        </div>
+
+        <div *ngIf="getUnassignedFeatures().length > 0">
+          <p>Select a feature to add to this plan:</p>
+          <div class="features-selection">
+            <label
+              *ngFor="let feature of getUnassignedFeatures()"
+              class="feature-option">
+              <input
+                type="radio"
+                name="selectedFeature"
+                [value]="feature.id"
+                (change)="selectedFeature.set(feature)">
+              <span class="feature-label">
+                <strong>{{ feature.name }}</strong>
+                <small>{{ feature.description }}</small>
+              </span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button
+          class="btn btn-primary"
+          [disabled]="!selectedFeature() || getUnassignedFeatures().length === 0"
+          (click)="addFeatureToPlan()">
+          Add Feature
+        </button>
+        <button
+          class="btn btn-secondary"
+          (click)="closeAddFeatureDialog()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

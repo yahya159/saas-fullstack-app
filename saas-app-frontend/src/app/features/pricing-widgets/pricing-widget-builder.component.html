@@ -1,30 +1,138 @@
-<div class="widget-builder">
-  <h1>Pricing Widget Builder</h1>
-  <p>Create and customize pricing widgets with drag-and-drop functionality.</p>
-  
-  <div class="templates-section">
-    <h2>Available Templates ({{ mockApi.templates().length }})</h2>
-    <div *ngFor="let template of mockApi.templates()" class="template-card">
-      <div>
-        <h3>{{ template.name }}</h3>
-        <p>{{ template.columns.length }} columns</p>
+<div class="pricing-widget-builder">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <h1>Pricing Widget Builder</h1>
+      <p class="subtitle">Create stunning, responsive pricing widgets with our intuitive drag-and-drop builder</p>
+    </div>
+    <div class="header-stats">
+      <div class="stat-card">
+        <div class="stat-number">{{ mockApi.templates().length }}</div>
+        <div class="stat-label">Templates</div>
       </div>
-      <button (click)="createWidget(template.id)">Use Template</button>
+      <div class="stat-card">
+        <div class="stat-number">{{ mockApi.widgets().length }}</div>
+        <div class="stat-label">My Widgets</div>
+      </div>
     </div>
   </div>
-  
-  <div class="widgets-section">
-    <h2>Your Widgets ({{ mockApi.widgets().length }})</h2>
-    <div *ngFor="let widget of mockApi.widgets()" class="widget-card">
-      <div>
-        <h3>{{ widget.name }}</h3>
-        <p>Template: {{ getTemplateName(widget.templateId) }}</p>
-        <p>Columns: {{ widget.columns.length }}</p>
+
+  <!-- Templates Section -->
+  <div class="templates-section">
+    <div class="section-header">
+      <div class="section-title">
+        <h2>Template Gallery</h2>
+        <span class="section-badge">{{ mockApi.templates().length }} Available</span>
       </div>
-      <div>
-        <button (click)="editWidget(widget.id)">Edit</button>
-        <button (click)="deleteWidget(widget.id)">Delete</button>
+      <p class="section-description">Choose from professionally designed templates to get started quickly</p>
+    </div>
+
+    <div class="templates-grid">
+      <div *ngFor="let template of mockApi.templates()" class="template-card">
+        <div class="template-preview">
+          <div class="preview-content">
+            <div class="preview-columns" [style.grid-template-columns]="'repeat(' + template.columns.length + ', 1fr)'">
+              <div *ngFor="let column of template.columns" class="preview-column">
+                <div *ngFor="let block of column.blocks.slice(0, 3)"
+                     class="preview-block"
+                     [ngClass]="'preview-' + block.type">
+                  {{ getBlockPreview(block.type) }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="template-overlay">
+            <button class="btn btn-primary" (click)="createWidget(template.id)">
+              <svg class="btn-icon" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M8 4a.5.5 0 01.5.5v3h3a.5.5 0 010 1h-3v3a.5.5 0 01-1 0v-3h-3a.5.5 0 010-1h3v-3A.5.5 0 018 4z"/>
+              </svg>
+              Use Template
+            </button>
+          </div>
+        </div>
+        <div class="template-info">
+          <h3>{{ template.name }}</h3>
+          <p class="template-meta">{{ template.columns.length }} columns • {{ getTotalBlocks(template) }} blocks</p>
+        </div>
       </div>
     </div>
+  </div>
+
+  <!-- Your Widgets Section -->
+  <div class="widgets-section">
+    <div class="section-header">
+      <div class="section-title">
+        <h2>My Widgets</h2>
+        <span class="section-badge" [ngClass]="mockApi.widgets().length > 0 ? 'badge-success' : 'badge-muted'">
+          {{ mockApi.widgets().length }} Created
+        </span>
+      </div>
+      <p class="section-description">Manage and customize your pricing widgets</p>
+    </div>
+
+    <div *ngIf="mockApi.widgets().length > 0; else emptyWidgets" class="widgets-grid">
+      <div *ngFor="let widget of mockApi.widgets()" class="widget-card">
+        <div class="widget-preview">
+          <div class="preview-content mini">
+            <div class="preview-columns" [style.grid-template-columns]="'repeat(' + widget.columns.length + ', 1fr)'">
+              <div *ngFor="let column of widget.columns" class="preview-column">
+                <div *ngFor="let block of column.blocks.slice(0, 2)"
+                     class="preview-block mini"
+                     [ngClass]="'preview-' + block.type">
+                  {{ getBlockPreview(block.type) }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="widget-info">
+          <h3>{{ widget.name }}</h3>
+          <div class="widget-meta">
+            <span class="meta-item">
+              <svg class="meta-icon" width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+                <path d="M2 3a1 1 0 011-1h8a1 1 0 011 1v8a1 1 0 01-1 1H3a1 1 0 01-1-1V3z"/>
+              </svg>
+              {{ getTemplateName(widget.templateId) }}
+            </span>
+            <span class="meta-item">
+              <svg class="meta-icon" width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+                <path d="M1 2h12v2H1V2zm0 4h12v2H1V6zm0 4h12v2H1v-2z"/>
+              </svg>
+              {{ widget.columns.length }} columns
+            </span>
+          </div>
+        </div>
+        <div class="widget-actions">
+          <button class="btn btn-sm btn-outline" (click)="editWidget(widget.id)" title="Edit widget">
+            <svg class="btn-icon" width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+              <path d="M11.013 1.427a1.75 1.75 0 012.474 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 01-.927-.928l.929-3.25a1.75 1.75 0 01.445-.758l8.61-8.61.086.087z"/>
+            </svg>
+            Edit
+          </button>
+          <button class="btn btn-sm btn-danger" (click)="deleteWidget(widget.id)" title="Delete widget">
+            <svg class="btn-icon" width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+              <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H3a.5.5 0 000 1h.5v6.5A1.5 1.5 0 005 13h4a1.5 1.5 0 001.5-1.5V5H11a.5.5 0 000-1h-2V3a1 1 0 00-1-1H6zM5.5 5.5a.5.5 0 01.5.5v4a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zM8 6a.5.5 0 01.5-.5.5.5 0 01.5.5v4a.5.5 0 01-1 0V6z" clip-rule="evenodd"/>
+            </svg>
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #emptyWidgets>
+      <div class="empty-state">
+        <div class="empty-content">
+          <div class="empty-icon">
+            <svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="currentColor">
+              <rect x="8" y="12" width="48" height="40" rx="4" stroke-width="2"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 20h8m-8 8h12m-12 8h16"/>
+              <circle cx="44" cy="28" r="8" stroke-width="2"/>
+            </svg>
+          </div>
+          <h3>No widgets created yet</h3>
+          <p>Start building your first pricing widget by selecting a template above. You can customize colors, layouts, and content to match your brand.</p>
+        </div>
+      </div>
+    </ng-template>
   </div>
 </div>

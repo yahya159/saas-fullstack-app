@@ -32,6 +32,7 @@ export class WidgetBuilderComponent {
   private widgetStore = inject(WidgetStoreService);
 
   widgets = this.widgetStore.widgets;
+  templates = this.widgetStore.templates;
   selectedWidget = this.widgetStore.selectedWidget;
   showPreview = signal(false);
   showExportModal = signal(false);
@@ -83,5 +84,19 @@ export class WidgetBuilderComponent {
   onWidgetSelect(event: Event): void {
     const target = event.target as HTMLSelectElement;
     this.selectWidget(target.value);
+  }
+
+  onTemplateSelect(event: Event): void {
+    const target = event.target as HTMLSelectElement;
+    const templateId = target.value;
+    
+    if (templateId) {
+      // Create a new widget from the selected template
+      const newWidget = this.widgetStore.createWidgetFromTemplate(templateId);
+      this.selectWidget(newWidget.id);
+      
+      // Reset the select dropdown
+      target.value = '';
+    }
   }
 }

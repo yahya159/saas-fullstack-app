@@ -77,6 +77,23 @@ export class UserPOJO {
     ref: 'SaasWorkspacePOJO',
   })
   workspace?: SaasWorkspacePOJO;
+
+  // OAuth2 fields
+  @AutoMap()
+  @Prop({ required: false })
+  oauthProvider?: string; // 'google' | 'microsoft'
+
+  @AutoMap()
+  @Prop({ required: false })
+  oauthProviderId?: string; // Provider-specific user ID
+
+  @AutoMap()
+  @Prop({ required: false })
+  oauthAccessToken?: string;
+
+  @AutoMap()
+  @Prop({ required: false })
+  picture?: string; // Profile picture URL
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserPOJO);

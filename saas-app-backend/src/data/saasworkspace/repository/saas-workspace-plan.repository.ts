@@ -9,7 +9,5 @@ export class SaasWorkspacePlanRepository {
   constructor(
     @InjectModel(SaasWorkspacePOJO.name)
     private saasWorkspaceModel: Model<SaasWorkspaceDocument>,
-  ) { }
-
-
+  ) {}
 }

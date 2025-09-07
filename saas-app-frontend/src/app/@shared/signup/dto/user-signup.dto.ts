@@ -12,6 +12,7 @@ export class UserSignUPDTO {
   zipCode!: number;
   password!: string;
   ////////////
-  plan!: string
+  // plan field removed as backend doesn't expect it
+  // plan!: string
 }
 

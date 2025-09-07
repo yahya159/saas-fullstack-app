@@ -18,7 +18,7 @@ export class PaymentManager {
     return this.paymentManagerMapper.mapFromSaasWorkspacePOJOToPaymentsConfigResultsDTO(
       await this.saasWorkspacePaymentRepository.getPaymentsConfigFromWorkspace(
         getPaymentsConfigurationDTO.saasRealmId,
-        getPaymentsConfigurationDTO.saasClientId
+        getPaymentsConfigurationDTO.saasClientId,
       ),
     );
   }

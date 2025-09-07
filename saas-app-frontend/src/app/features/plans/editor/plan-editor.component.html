@@ -9,15 +9,39 @@
     </div>
   </div>
 
-  <form [formGroup]="planForm" class="plan-form">
+  <!-- Tab Navigation -->
+  <div class="tab-navigation">
+    <button
+      class="tab-button"
+      [class.active]="activeTab() === 'details'"
+      (click)="setActiveTab('details')">
+      Plan Details
+    </button>
+    <button
+      class="tab-button"
+      [class.active]="activeTab() === 'tiers'"
+      (click)="setActiveTab('tiers')">
+      Pricing Tiers
+    </button>
+    <button
+      *ngIf="!isNewPlan()"
+      class="tab-button"
+      [class.active]="activeTab() === 'features'"
+      (click)="setActiveTab('features')">
+      Features
+    </button>
+  </div>
+
+  <!-- Plan Details Tab -->
+  <form [formGroup]="planForm" class="plan-form" *ngIf="activeTab() === 'details'">
     <div class="form-section">
       <h2>Plan Details</h2>
       <div class="form-group">
         <label for="name">Plan Name</label>
-        <input 
+        <input
           id="name"
-          type="text" 
-          formControlName="name" 
+          type="text"
+          formControlName="name"
           placeholder="Enter plan name"
           [class.error]="planForm.get('name')?.invalid && planForm.get('name')?.touched"
         >
@@ -28,9 +52,9 @@
 
       <div class="form-group">
         <label for="description">Description</label>
-        <textarea 
+        <textarea
           id="description"
-          formControlName="description" 
+          formControlName="description"
           placeholder="Describe your plan"
           rows="3"
         ></textarea>
@@ -44,7 +68,10 @@
         </label>
       </div>
     </div>
+  </form>
 
+  <!-- Pricing Tiers Tab -->
+  <div *ngIf="activeTab() === 'tiers'" class="tiers-tab">
     <div class="form-section">
       <div class="section-header">
         <h2>Pricing Tiers</h2>
@@ -58,7 +85,7 @@
       </div>
 
       <div class="tiers-container">
-        <div *ngFor="let tier of plan()?.tiers || []" class="tier-card" 
+        <div *ngFor="let tier of plan()?.tiers || []" class="tier-card"
              [class.selected]="selectedTierId() === tier.id"
              (click)="selectTier(tier.id)"
              (keydown.enter)="selectTier(tier.id)"
@@ -88,14 +115,19 @@
         </div>
       </div>
     </div>
-  </form>
+  </div>
+
+  <!-- Features Tab -->
+  <div *ngIf="activeTab() === 'features' && !isNewPlan()" class="features-tab">
+    <app-plan-features [planId]="plan()?.id || ''"></app-plan-features>
+  </div>
 
   <div *ngIf="selectedTierId()" class="tier-editor-panel">
-    <app-tier-editor 
+    <app-tier-editor
       [tier]="getSelectedTier()"
       [planId]="plan()?.id || ''"
       (tierUpdated)="selectTier($event)"
-      (close)="selectedTierId.set(null)">
+      (closeEditor)="selectedTierId.set(null)">
     </app-tier-editor>
   </div>
 </div>

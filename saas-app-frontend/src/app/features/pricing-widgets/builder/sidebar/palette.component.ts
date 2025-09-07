@@ -1,26 +1,18 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
+import { WidgetStoreService } from '../../state/widget-store.service';
 import { WidgetBlockType } from '../../../../core/models/pricing.models';
 
 @Component({
   selector: 'app-palette',
   templateUrl: './palette.component.html',
   styleUrls: ['./palette.component.css'],
-  imports: [CommonModule, CdkDrag, CdkDropList],
+  imports: [CommonModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true
 })
 export class PaletteComponent {
-  onDragStarted(): void {
-    // Add visual feedback when drag starts
-    document.body.classList.add('dragging-active');
-  }
-
-  onDragEnded(): void {
-    // Remove visual feedback when drag ends
-    document.body.classList.remove('dragging-active');
-  }
+  private widgetStore = inject(WidgetStoreService);
 
   readonly blockTypes: { type: WidgetBlockType; label: string; description: string; icon: string }[] = [
     {
@@ -60,4 +52,22 @@ export class PaletteComponent {
       icon: '➖'
     }
   ];
+
+  onBlockClick(blockType: WidgetBlockType): void {
+    console.log('Block clicked:', blockType);
+    const selectedWidget = this.widgetStore.selectedWidget();
+    if (!selectedWidget) {
+      console.log('No widget selected');
+      return;
+    }
+
+    // Add block to the first column by default
+    if (selectedWidget.columns.length > 0) {
+      const firstColumnId = selectedWidget.columns[0].id;
+      console.log('Adding block to column:', firstColumnId);
+      this.widgetStore.addBlockToColumn(selectedWidget.id, firstColumnId, blockType);
+    } else {
+      console.log('No columns available');
+    }
+  }
 }

@@ -13,8 +13,15 @@ import { UserDataModule } from './user/user.data.module';
 import { WorkspaceConfigurationDataModule } from './saasWorkspaceConfiguration/saasWorkspaceConfiguration.data.module';
 import { SaasCustomerAdminModule } from './saasCustomerAdmin/saasCustomerAdmin.data.module';
 import { SaasApplicationConfigurationDataModule } from './saasApplicationConfiguration/saasApplicationConfiguration.data.module';
+import { SaasFeatureDataModule } from './saasFeature/saasFeature.data.module';
+import { SaasPlanFeatureDataModule } from './saasPlanFeature/saasPlanFeature.data.module';
+import { SaasWidgetDataModule } from './saasWidget/saasWidget.data.module';
+import { SaasMarketingCampaignDataModule } from './saasMarketingCampaign/saasMarketingCampaign.data.module';
+import { SaasAnalyticsEventDataModule } from './saasAnalyticsEvent/saasAnalyticsEvent.data.module';
+import { SaasRoleDataModule } from './saasRole/saasRole.data.module';
+import { SaasUserRoleDataModule } from './saasUserRole/saasUserRole.data.module';
 
-let dataModules = [
+const dataModules = [
   SaasworkspaceModule,
   UserDataModule,
   SaasApplicationDataModule,
@@ -25,6 +32,13 @@ let dataModules = [
   SaasPlanDataModule,
   SaasPricingDataModule,
   SaasCurrencyDataModule,
+  SaasFeatureDataModule,
+  SaasPlanFeatureDataModule,
+  SaasWidgetDataModule,
+  SaasMarketingCampaignDataModule,
+  SaasAnalyticsEventDataModule,
+  SaasRoleDataModule,
+  SaasUserRoleDataModule,
 
   // new
   SaasPaymentDataModule,
@@ -32,6 +46,6 @@ let dataModules = [
   SaasSubscriberDataModule,
   SaasPaymentDataModule,
   SaasSubscriptionHistoryDataModule,
-  SaasCustomerAdminModule
+  SaasCustomerAdminModule,
 ];
 export { dataModules };

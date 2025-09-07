@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class SaasworkspaceRepository {
-  constructor(
-  ) { }
-
+  constructor() {
+    // Initialize workspace repository
+  }
 }

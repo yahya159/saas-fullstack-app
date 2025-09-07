@@ -16,5 +16,4 @@ export class SaasApplicationConfigurationRepository {
   async getWorkspaceByName(name: string): Promise<SaasApplicationConfigurationPOJO> {
     return await this.saasApplicationConfigurationModel.findOne({ realmId: name });
   }
-
 }

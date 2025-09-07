@@ -24,4 +24,4 @@ import { MapperServiceModule } from '@Services/mappers/mapper-service.module';
   providers: [SaasSubscriptionHistoryRepository], // put repo here
   exports: [SaasSubscriptionHistoryRepository], // put repo here
 })
-export class SaasSubscriptionHistoryDataModule { }
+export class SaasSubscriptionHistoryDataModule {}

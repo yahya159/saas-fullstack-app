@@ -6,4 +6,3 @@ export interface Data {
   clientKeycloakSecret: string;
   clientSaasSecret: string;
 }
-

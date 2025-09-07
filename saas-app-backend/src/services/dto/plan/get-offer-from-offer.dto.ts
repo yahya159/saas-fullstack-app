@@ -1,4 +1,4 @@
-import { AutoMap } from '@automapper/classes'
+import { AutoMap } from '@automapper/classes';
 import mongoose from 'mongoose';
 
 export class GetPlanFromOfferDTO {

@@ -171,7 +171,12 @@ describe('WidgetStoreService', () => {
         id: 'blank-widget-id',
         name: 'New Widget',
         templateId: '',
-        columns: [],
+        columns: [{
+          id: 'generated-id',
+          order: 0,
+          blocks: [],
+          widthFraction: 12 as const
+        }],
         style: { gap: 16, background: '#ffffff', maxWidth: 1200 }
       };
 
@@ -183,7 +188,13 @@ describe('WidgetStoreService', () => {
         jasmine.objectContaining({
           name: 'New Widget',
           templateId: '',
-          columns: []
+          columns: jasmine.arrayContaining([
+            jasmine.objectContaining({
+              order: 0,
+              blocks: [],
+              widthFraction: 12
+            })
+          ])
         })
       );
       expect(service.selectedWidgetId()).toBe(blankWidget.id);
@@ -381,7 +392,7 @@ describe('WidgetStoreService', () => {
       const html = service.exportHtml('widget-1');
 
       expect(html).toContain('<section class="pricing-widget" role="region" aria-label="Pricing">');
-      expect(html).toContain('<ul class="widget-column" role="list"');
+      expect(html).toContain('<div class="pricing-column" role="listitem"');
       expect(html).toContain('max-width: 1200px');
       expect(html).toContain('gap: 16px');
     });
@@ -419,7 +430,7 @@ describe('WidgetStoreService', () => {
       service.selectWidget('widget-1');
       service.updateBlockStyle('widget-1', 'non-existent', { padding: 20 });
       // The method should call updateWidget even if block doesn't exist (no-op update)
-      expect(mockApiService.updateWidget).toHaveBeenCalledWith('widget-1', 
+      expect(mockApiService.updateWidget).toHaveBeenCalledWith('widget-1',
         jasmine.objectContaining({
           columns: jasmine.arrayContaining([
             jasmine.objectContaining({

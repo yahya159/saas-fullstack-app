@@ -1,22 +1,26 @@
 import { Component, ElementRef, OnInit, ChangeDetectionStrategy, inject } from '@angular/core';
-import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { RouterModule, Router } from '@angular/router';
 import { SignupService } from 'src/app/@api/services/signup/signup.service';
 import { UserSignUPDTO } from '../dto/user-signup.dto';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css'],
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true
 })
 export class SignupComponent implements OnInit {
   myForm!: FormGroup;
   invalidFields: Record<string, boolean> = {};
-  
+
   private signupService = inject(SignupService);
+  private authService = inject(AuthService);
+  private router = inject(Router);
   private el = inject(ElementRef);
 
   ngOnInit() {
@@ -64,8 +68,32 @@ export class SignupComponent implements OnInit {
         // zip code regex
         Validators.pattern('[0-9]{5}')
       ]),
-    });
+      password: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(6)
+      ]),
+      confirmPassword: new FormControl(null, [
+        Validators.required
+      ])
+    }, { validators: this.passwordMatchValidator });
   }
+
+  private passwordMatchValidator = (control: AbstractControl): ValidationErrors | null => {
+    const form = control as FormGroup;
+    const password = form.get('password');
+    const confirmPassword = form.get('confirmPassword');
+
+    if (password && confirmPassword && password.value !== confirmPassword.value) {
+      confirmPassword.setErrors({ passwordMismatch: true });
+      return { passwordMismatch: true };
+    }
+
+    if (confirmPassword?.hasError('passwordMismatch') && password?.value === confirmPassword?.value) {
+      confirmPassword.setErrors(null);
+    }
+
+    return null;
+  };
 
   onFormSubmit(form: FormGroup) {
     this.invalidFields = {};
@@ -92,11 +120,10 @@ export class SignupComponent implements OnInit {
 
       zipCode: Number(form.value.zipCode),
 
-      password: "dump-data",
+      password: form.value.password
 
-      //////////////
-
-      plan: "	YZ-PLAN-1"
+      // Note: plan field removed as backend doesn't expect it
+      // plan: "YZ-PLAN-1"
     }
     //
     if (form.valid) {
@@ -118,9 +145,33 @@ export class SignupComponent implements OnInit {
         this.invalidFields[controlName] = true;
       }
       setTimeout(() => {
-
         this.invalidFields[controlName] = false;
-      }, 4000)
+      }, 4000);
     });
+
+    // Handle form-level password mismatch error
+    if (this.myForm.hasError('passwordMismatch')) {
+      this.invalidFields['confirmPassword'] = true;
+      setTimeout(() => {
+        this.invalidFields['confirmPassword'] = false;
+      }, 4000);
+    }
+  }
+
+  // OAuth2 Authentication Methods
+  async loginWithGoogle() {
+    try {
+      await this.authService.loginWithGoogle();
+    } catch (error) {
+      console.error('Google OAuth error:', error);
+    }
+  }
+
+  async loginWithMicrosoft() {
+    try {
+      await this.authService.loginWithMicrosoft();
+    } catch (error) {
+      console.error('Microsoft OAuth error:', error);
+    }
   }
 }

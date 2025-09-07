@@ -1,16 +1,17 @@
-import { Component, ChangeDetectionStrategy, inject, OnInit, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { PlansStoreService } from '../state/plans-store.service';
 import { TierEditorComponent } from './tier-editor.component';
 import { FeatureSelectorComponent } from './feature-selector.component';
+import { PlanFeaturesComponent } from './plan-features.component';
 
 @Component({
   selector: 'app-plan-editor',
   templateUrl: './plan-editor.component.html',
   styleUrls: ['./plan-editor.component.css'],
-  imports: [CommonModule, ReactiveFormsModule, TierEditorComponent, FeatureSelectorComponent],
+  imports: [CommonModule, ReactiveFormsModule, TierEditorComponent, FeatureSelectorComponent, PlanFeaturesComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true
 })
@@ -23,6 +24,7 @@ export class PlanEditorComponent implements OnInit {
   planForm!: FormGroup;
   selectedTierId = signal<string | null>(null);
   isNewPlan = signal(false);
+  activeTab = signal<'details' | 'tiers' | 'features'>('details');
 
   plan = this.plansStore.selectedPlan;
 
@@ -41,14 +43,14 @@ export class PlanEditorComponent implements OnInit {
 
   private loadPlan(): void {
     const planId = this.route.snapshot.paramMap.get('id');
-    
+
     if (planId === 'new') {
       this.isNewPlan.set(true);
       this.createNewPlan();
     } else if (planId) {
       this.isNewPlan.set(false);
       this.plansStore.selectPlan(planId);
-      
+
       const plan = this.plansStore.selectedPlan();
       if (plan) {
         this.planForm.patchValue({
@@ -67,7 +69,7 @@ export class PlanEditorComponent implements OnInit {
       public: false,
       tiers: []
     });
-    
+
     this.planForm.patchValue({
       name: newPlan.name,
       description: newPlan.description,
@@ -89,6 +91,10 @@ export class PlanEditorComponent implements OnInit {
     this.router.navigate(['/plans']);
   }
 
+  setActiveTab(tab: 'details' | 'tiers' | 'features'): void {
+    this.activeTab.set(tab);
+  }
+
   addTier(): void {
     const plan = this.plan();
     if (plan) {
@@ -99,7 +105,7 @@ export class PlanEditorComponent implements OnInit {
         features: [],
         ctaLabel: 'Get Started'
       });
-      
+
       if (newTier) {
         this.selectedTierId.set(newTier.id);
       }

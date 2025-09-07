@@ -39,12 +39,19 @@
   gap: 0.5rem;
 }
 
-.widget-selector select {
+.widget-selector select,
+.template-selector {
   padding: 0.5rem;
   border: 1px solid #d1d5db;
   border-radius: 4px;
   font-size: 0.875rem;
   min-width: 200px;
+}
+
+.template-selector-container {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #f1f3f4;
 }
 
 .header-right {

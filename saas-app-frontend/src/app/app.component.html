@@ -1,4 +1,117 @@
 <!-- Skip link for keyboard navigation -->
 <a href="#main-content" class="skip-link">Skip to main content</a>
 
-<router-outlet></router-outlet>
+<!-- Modern Navigation Header -->
+<header class="app-header">
+  <nav class="main-nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-container">
+      <!-- Logo and Brand -->
+      <div class="brand">
+        <div class="brand-icon">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="32" height="32" rx="8" fill="url(#logoGradient)"/>
+            <path d="M8 24V8h4l4 8 4-8h4v16h-3V13l-3 6h-2l-3-6v11H8z" fill="white"/>
+            <defs>
+              <linearGradient id="logoGradient" x1="0" y1="0" x2="32" y2="32">
+                <stop stop-color="#3B82F6"/>
+                <stop offset="1" stop-color="#0EA5E9"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1 class="brand-title">MarketSaaS</h1>
+          <span class="brand-subtitle">Platform</span>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <div class="nav-links" role="list">
+        <a routerLink="/plans"
+           routerLinkActive="active"
+           class="nav-link"
+           role="listitem"
+           [attr.aria-current]="router.url.includes('/plans') ? 'page' : null">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4zM18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"/>
+          </svg>
+          <span>Plans</span>
+          <span class="nav-badge">New</span>
+        </a>
+
+        <a routerLink="/pricing-widgets"
+           routerLinkActive="active"
+           class="nav-link"
+           role="listitem"
+           [attr.aria-current]="router.url.includes('/pricing-widgets') ? 'page' : null">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+          </svg>
+          <span>Widgets</span>
+        </a>
+
+        <a routerLink="/marketing"
+           routerLinkActive="active"
+           class="nav-link"
+           role="listitem"
+           [attr.aria-current]="router.url.includes('/marketing') ? 'page' : null">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414-1.414L10 9.586 8.707 8.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+          </svg>
+          <span>Marketing</span>
+        </a>
+
+        <a routerLink="/role-management"
+           routerLinkActive="active"
+           class="nav-link"
+           role="listitem"
+           [attr.aria-current]="router.url.includes('/role-management') ? 'page' : null">
+          <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
+          </svg>
+          <span>Team</span>
+        </a>
+      </div>
+
+      <!-- User Menu and Actions -->
+      <div class="nav-actions">
+        <button class="theme-toggle"
+                (click)="toggleTheme()"
+                [attr.aria-label]="isDarkMode() ? 'Switch to light mode' : 'Switch to dark mode'">
+          <svg *ngIf="!isDarkMode" class="theme-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/>
+          </svg>
+          <svg *ngIf="isDarkMode" class="theme-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/>
+          </svg>
+        </button>
+
+        <div class="user-menu">
+          <button class="user-avatar"
+                  [attr.aria-expanded]="showUserMenu()"
+                  (click)="toggleUserMenu()">
+            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face"
+                 alt="User avatar"
+                 class="avatar-image">
+            <svg class="dropdown-arrow" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+            </svg>
+          </button>
+
+          <div class="user-dropdown"
+               [class.show]="showUserMenu()"
+               role="menu">
+            <a routerLink="/profile" class="dropdown-item" role="menuitem">Profile</a>
+            <a href="#" class="dropdown-item" role="menuitem">Settings</a>
+            <hr class="dropdown-divider">
+            <a (click)="signOut()" class="dropdown-item" role="menuitem" style="cursor: pointer;">Sign out</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main id="main-content" class="main-content">
+  <router-outlet></router-outlet>
+</main>

@@ -13,8 +13,6 @@ export class PaymentManagerMapperConfig extends AutomapperProfile {
 
   override get profile() {
     return (mapper) => {
-
-
       // new
       createMap(mapper, SaasPaymentMethodConfigurationPOJO, PaymentsConfigResultsDTO);
     };

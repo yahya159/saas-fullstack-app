@@ -11,7 +11,5 @@ export class SaasSubscriptionHistoryRepository {
   constructor(
     @InjectModel(SaasSubscriptionHistoryPOJO.name)
     private saasSubscriptionHistory: Model<SaasSubscriptionHistoryDocument>,
-  ) { }
-
- 
+  ) {}
 }

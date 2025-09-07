@@ -20,4 +20,4 @@ import { MapperServiceModule } from '@Services/mappers/mapper-service.module';
   providers: [SaasPaymentRepository], // put repo here
   exports: [SaasPaymentRepository], // put repo here
 })
-export class SaasPaymentDataModule { }
+export class SaasPaymentDataModule {}
