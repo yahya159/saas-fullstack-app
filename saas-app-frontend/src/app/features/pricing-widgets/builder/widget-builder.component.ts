@@ -105,20 +105,20 @@ export class WidgetBuilderComponent {
   getTemplateType(templateName: string): string {
     // Log the template name to see what we're working with
     console.log('Processing template name for type:', `"${templateName}"`);
-    
+
     const typeMap: Record<string, string> = {
       '3-column classic': '3-column-classic',
       '2-column spotlight': '2-column-spotlight',
       'Comparison matrix': 'comparison-matrix'
     };
-    
+
     // Check for exact match first
     if (typeMap[templateName]) {
       const type = typeMap[templateName];
       console.log('Exact match found for type, type:', type);
       return type;
     }
-    
+
     // Check for trimmed match
     const trimmedName = templateName.trim();
     if (typeMap[trimmedName]) {
@@ -126,10 +126,10 @@ export class WidgetBuilderComponent {
       console.log('Trimmed match found for type, type:', type);
       return type;
     }
-    
+
     // Log all available keys for debugging
     console.log('Available template names in type map:', Object.keys(typeMap));
-    
+
     const type = templateName; // Return the original name as fallback
     console.log('No match found for type, using original name:', type);
     return type;
@@ -138,20 +138,20 @@ export class WidgetBuilderComponent {
   getTemplateImage(templateName: string): string {
     // Log the template name to see what we're working with
     console.log('Getting image for template name:', `"${templateName}"`);
-    
+
     const imageMap: Record<string, string> = {
       '3-column classic': 'assets/templates/3-column-classic.svg',
       '2-column spotlight': 'assets/templates/2-column-spotlight.svg',
       'Comparison matrix': 'assets/templates/comparison-matrix.svg'
     };
-    
+
     // Check for exact match first
     if (imageMap[templateName]) {
       const image = imageMap[templateName];
       console.log('Exact match found for image, image:', image);
       return image;
     }
-    
+
     // Check for trimmed match
     const trimmedName = templateName.trim();
     if (imageMap[trimmedName]) {
@@ -159,10 +159,10 @@ export class WidgetBuilderComponent {
       console.log('Trimmed match found for image, image:', image);
       return image;
     }
-    
+
     // Log all available keys for debugging
     console.log('Available template names in image map:', Object.keys(imageMap));
-    
+
     const image = 'assets/templates/3-column-classic.svg';
     console.log('No match found for image, using default image:', image);
     return image;

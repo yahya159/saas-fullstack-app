@@ -10,7 +10,7 @@ import { MarketingService, MarketingCampaign } from '../services/marketing.servi
   imports: [CommonModule, RouterModule, MarketingMenuComponent],
   template: `
     <app-marketing-menu></app-marketing-menu>
-    
+
     <div class="campaign-list">
       <div class="header">
         <h1>Marketing Campaigns</h1>
@@ -31,7 +31,7 @@ import { MarketingService, MarketingCampaign } from '../services/marketing.servi
             <option value="ARCHIVED">Archived</option>
           </select>
         </div>
-        
+
         <div class="filter-group">
           <label for="type-filter">Type:</label>
           <select id="type-filter" class="filter-select" (change)="filterByType($event)">
@@ -348,18 +348,18 @@ import { MarketingService, MarketingCampaign } from '../services/marketing.servi
       .campaign-list {
         padding: 1rem;
       }
-      
+
       .header {
         flex-direction: column;
         gap: 1rem;
         align-items: flex-start;
       }
-      
+
       .filters {
         flex-direction: column;
         gap: 1rem;
       }
-      
+
       .campaigns-grid {
         grid-template-columns: 1fr;
       }
@@ -368,7 +368,7 @@ import { MarketingService, MarketingCampaign } from '../services/marketing.servi
 })
 export class CampaignListComponent implements OnInit {
   private readonly marketingService = inject(MarketingService);
-  
+
   allCampaigns = signal<MarketingCampaign[]>([]);
   filteredCampaigns = signal<MarketingCampaign[]>([]);
   currentStatusFilter = signal<string>('');
@@ -409,15 +409,15 @@ export class CampaignListComponent implements OnInit {
 
   private applyFilters() {
     let filtered = this.allCampaigns();
-    
+
     if (this.currentStatusFilter()) {
       filtered = filtered.filter(campaign => campaign.status === this.currentStatusFilter());
     }
-    
+
     if (this.currentTypeFilter()) {
       filtered = filtered.filter(campaign => campaign.type === this.currentTypeFilter());
     }
-    
+
     this.filteredCampaigns.set(filtered);
   }
 
@@ -431,7 +431,7 @@ export class CampaignListComponent implements OnInit {
         next: (response) => {
           if (response.success) {
             // Update the campaign in our list
-            const updatedCampaigns = this.allCampaigns().map(c => 
+            const updatedCampaigns = this.allCampaigns().map(c =>
               c._id === campaign._id ? response.data : c
             );
             this.allCampaigns.set(updatedCampaigns);
@@ -447,7 +447,7 @@ export class CampaignListComponent implements OnInit {
         next: (response) => {
           if (response.success) {
             // Update the campaign in our list
-            const updatedCampaigns = this.allCampaigns().map(c => 
+            const updatedCampaigns = this.allCampaigns().map(c =>
               c._id === campaign._id ? response.data : c
             );
             this.allCampaigns.set(updatedCampaigns);

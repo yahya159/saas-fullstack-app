@@ -9,8 +9,8 @@ import { RouterModule, Router } from '@angular/router';
       <div class="menu-container">
         <ul class="menu-items" role="menubar">
           <li class="menu-item" role="none">
-            <a routerLink="/marketing/dashboard" 
-               routerLinkActive="active" 
+            <a routerLink="/marketing/dashboard"
+               routerLinkActive="active"
                class="menu-link"
                role="menuitem"
                [attr.aria-current]="isCurrentRoute('/marketing/dashboard') ? 'page' : null">
@@ -20,10 +20,10 @@ import { RouterModule, Router } from '@angular/router';
               <span>Dashboard</span>
             </a>
           </li>
-          
+
           <li class="menu-item" role="none">
-            <a routerLink="/marketing/campaigns" 
-               routerLinkActive="active" 
+            <a routerLink="/marketing/campaigns"
+               routerLinkActive="active"
                class="menu-link"
                role="menuitem"
                [attr.aria-current]="isCurrentRoute('/marketing/campaigns') ? 'page' : null">
@@ -33,10 +33,10 @@ import { RouterModule, Router } from '@angular/router';
               <span>Campaigns</span>
             </a>
           </li>
-          
+
           <li class="menu-item" role="none">
-            <a routerLink="/marketing/analytics" 
-               routerLinkActive="active" 
+            <a routerLink="/marketing/analytics"
+               routerLinkActive="active"
                class="menu-link"
                role="menuitem"
                [attr.aria-current]="isCurrentRoute('/marketing/analytics') ? 'page' : null">
@@ -120,20 +120,20 @@ import { RouterModule, Router } from '@angular/router';
       .menu-container {
         padding: 0 1rem;
       }
-      
+
       .menu-items {
         gap: 0.25rem;
       }
-      
+
       .menu-link {
         padding: 0.75rem 1rem;
         font-size: 0.875rem;
       }
-      
+
       .menu-link span {
         display: none;
       }
-      
+
       .menu-link svg {
         margin-right: 0;
       }

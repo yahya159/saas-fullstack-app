@@ -17,19 +17,19 @@ import { ThemeService } from '../../core/services/theme.service';
         </h3>
         <p>Customize the look and feel of your widgets</p>
       </div>
-      
+
       <form [formGroup]="themeForm" class="theme-form">
         <!-- Accent Color -->
         <div class="form-group">
           <label for="accentColor">Accent Color</label>
           <div class="color-input-group">
-            <input 
-              type="color" 
+            <input
+              type="color"
               id="accentColor"
               formControlName="accentColor"
               class="color-picker">
-            <input 
-              type="text" 
+            <input
+              type="text"
               formControlName="accentColorText"
               class="color-text"
               placeholder="#3498db">
@@ -40,22 +40,22 @@ import { ThemeService } from '../../core/services/theme.service';
         <div class="form-group">
           <label for="radiusScale">Border Radius Scale</label>
           <div class="radius-preview">
-            <div class="radius-demo" 
+            <div class="radius-demo"
                  [style.border-radius]="themeService.radiusScale() + 'px'">
               {{ themeService.radiusScale() }}px
             </div>
           </div>
-          <input 
-            type="range" 
+          <input
+            type="range"
             id="radiusScale"
             formControlName="radiusScale"
-            min="4" 
-            max="16" 
+            min="4"
+            max="16"
             step="2"
             class="radius-slider">
           <div class="radius-options">
-            <button type="button" 
-                    *ngFor="let size of radiusOptions" 
+            <button type="button"
+                    *ngFor="let size of radiusOptions"
                     (click)="setRadiusScale(size)"
                     [class.active]="themeService.radiusScale() === size"
                     class="radius-btn">
@@ -67,8 +67,8 @@ import { ThemeService } from '../../core/services/theme.service';
         <!-- Dark Mode Toggle -->
         <div class="form-group">
           <label class="toggle-label">
-            <input 
-              type="checkbox" 
+            <input
+              type="checkbox"
               formControlName="isDarkMode"
               class="toggle-input">
             <span class="toggle-slider"></span>
@@ -80,13 +80,13 @@ import { ThemeService } from '../../core/services/theme.service';
         <div class="form-group">
           <label for="currency">Currency</label>
           <div class="currency-toggle">
-            <button type="button" 
+            <button type="button"
                     (click)="setCurrency('USD')"
                     [class.active]="themeService.currency() === 'USD'"
                     class="currency-btn">
               USD
             </button>
-            <button type="button" 
+            <button type="button"
                     (click)="setCurrency('MAD')"
                     [class.active]="themeService.currency() === 'MAD'"
                     class="currency-btn">

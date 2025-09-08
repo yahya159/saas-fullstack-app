@@ -297,19 +297,19 @@
   .widget-container {
     padding: 1rem;
   }
-  
+
   .widget-columns {
     gap: 1rem;
   }
-  
+
   .column-content {
     padding: 1rem;
   }
-  
+
   .block-content {
     padding: 1rem;
   }
-  
+
   .widget-column {
     min-height: 200px;
   }

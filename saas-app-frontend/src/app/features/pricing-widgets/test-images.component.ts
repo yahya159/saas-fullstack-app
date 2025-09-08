@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
   template: `
     <div style="padding: 20px;">
       <h2>Template Image Test</h2>
-      
+
       <div style="margin: 20px 0;">
         <h3>Direct Image Tests</h3>
         <div>
@@ -22,7 +22,7 @@ import { CommonModule } from '@angular/common';
           <img src="assets/templates/comparison-matrix.svg" alt="Comparison matrix" width="200" height="120" (error)="onImageError('comparison-matrix.svg')" (load)="onImageLoad('comparison-matrix.svg')">
         </div>
       </div>
-      
+
       <div style="margin: 20px 0;">
         <h3>Image Status</h3>
         <pre>{{ imageStatus | json }}</pre>

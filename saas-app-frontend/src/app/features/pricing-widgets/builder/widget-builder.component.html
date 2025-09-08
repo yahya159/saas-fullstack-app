@@ -51,7 +51,7 @@
             </h3>
             <app-theme-switcher></app-theme-switcher>
           </div>
-          
+
           <div class="sidebar-section">
             <h3>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -62,7 +62,7 @@
             </h3>
             <app-palette></app-palette>
           </div>
-          
+
           <div class="sidebar-section">
             <h3>
               <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -86,7 +86,7 @@
           </div>
           <div class="templates-grid">
             <!-- Blank Template Card -->
-            <div class="template-card blank-template" 
+            <div class="template-card blank-template"
                  (click)="createNewWidget()"
                  (keydown.enter)="createNewWidget()"
                  (keydown.space)="createNewWidget()"
@@ -107,11 +107,11 @@
                 </button>
               </div>
             </div>
-            
+
             <!-- Template Cards -->
             <div *ngFor="let template of templates()" class="template-card">
               <div class="template-preview">
-                <app-template-thumbnail 
+                <app-template-thumbnail
                   [templateName]="template.name"
                   [templateType]="getTemplateType(template.name)"
                   [imageSrc]="getTemplateImage(template.name)">
@@ -153,7 +153,7 @@
                 <h3>{{ widget.name }}</h3>
               </div>
               <div class="widget-details">
-                <p>{{ widget.columns.length }} column{{ widget.columns.length !== 1 ? 's' : '' }}, 
+                <p>{{ widget.columns.length }} column{{ widget.columns.length !== 1 ? 's' : '' }},
                    {{ getColumnBlockCount(widget) }} block{{ getColumnBlockCount(widget) !== 1 ? 's' : '' }}</p>
               </div>
               <div class="widget-actions">
@@ -188,7 +188,7 @@
     </main>
   </div>
 
-  <app-export-modal 
+  <app-export-modal
     *ngIf="showExportModal()"
     (closeModal)="closeExportModal()">
   </app-export-modal>

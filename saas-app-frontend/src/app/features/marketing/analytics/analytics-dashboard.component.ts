@@ -10,7 +10,7 @@ import { MarketingService } from '../services/marketing.service';
   imports: [CommonModule, RouterModule, MarketingMenuComponent],
   template: `
     <app-marketing-menu></app-marketing-menu>
-    
+
     <div class="analytics-dashboard">
       <div class="header">
         <h1>Analytics Dashboard</h1>
@@ -123,7 +123,7 @@ import { MarketingService } from '../services/marketing.service';
               <button class="btn btn-outline" (click)="copyToClipboard(trackingScript())">
                 Copy to Clipboard
               </button>
-              
+
               <h3>Tracking Pixel</h3>
               <pre class="code-block">{{ trackingPixel() }}</pre>
               <button class="btn btn-outline" (click)="copyToClipboard(trackingPixel())">
@@ -355,27 +355,27 @@ import { MarketingService } from '../services/marketing.service';
       .analytics-dashboard {
         padding: 1rem;
       }
-      
+
       .header {
         flex-direction: column;
         gap: 1rem;
         align-items: flex-start;
       }
-      
+
       .dashboard-stats {
         grid-template-columns: 1fr 1fr;
       }
-      
+
       .table-header,
       .table-row {
         grid-template-columns: 1fr 1fr;
       }
-      
+
       .table-cell:nth-child(n+3) {
         display: none;
       }
     }
-    
+
     @media (max-width: 480px) {
       .dashboard-stats {
         grid-template-columns: 1fr;
@@ -385,14 +385,14 @@ import { MarketingService } from '../services/marketing.service';
 })
 export class AnalyticsDashboardComponent implements OnInit {
   private readonly marketingService = inject(MarketingService);
-  
+
   analyticsData = signal({
     totalEvents: 12543,
     totalConversions: 876,
     avgConversionRate: 6.98,
     totalRevenue: 42500
   });
-  
+
   topCampaigns = signal([
     {
       name: 'Summer Sale A/B Test',
@@ -431,7 +431,7 @@ export class AnalyticsDashboardComponent implements OnInit {
       }
     }
   ]);
-  
+
   trackingScript = signal('');
   trackingPixel = signal('');
 

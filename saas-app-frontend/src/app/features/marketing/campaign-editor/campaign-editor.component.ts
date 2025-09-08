@@ -11,7 +11,7 @@ import { MarketingService, MarketingCampaign, CreateCampaignDto } from '../servi
   imports: [CommonModule, RouterModule, ReactiveFormsModule, MarketingMenuComponent],
   template: `
     <app-marketing-menu></app-marketing-menu>
-    
+
     <div class="campaign-editor">
       <div class="header">
         <h1>{{ isEditMode() ? 'Edit Campaign' : 'Create New Campaign' }}</h1>
@@ -30,34 +30,34 @@ import { MarketingService, MarketingCampaign, CreateCampaignDto } from '../servi
         <form [formGroup]="campaignForm" class="campaign-form">
           <div class="form-section">
             <h2>Campaign Details</h2>
-            
+
             <div class="form-group">
               <label for="name">Campaign Name *</label>
-              <input 
-                type="text" 
-                id="name" 
-                formControlName="name" 
+              <input
+                type="text"
+                id="name"
+                formControlName="name"
                 class="form-control"
                 [class.error]="campaignForm.get('name')?.invalid && campaignForm.get('name')?.touched">
               <div class="error-message" *ngIf="campaignForm.get('name')?.invalid && campaignForm.get('name')?.touched">
                 Campaign name is required
               </div>
             </div>
-            
+
             <div class="form-group">
               <label for="description">Description</label>
-              <textarea 
-                id="description" 
-                formControlName="description" 
+              <textarea
+                id="description"
+                formControlName="description"
                 class="form-control"
                 rows="3"></textarea>
             </div>
-            
+
             <div class="form-group">
               <label for="type">Campaign Type *</label>
-              <select 
-                id="type" 
-                formControlName="type" 
+              <select
+                id="type"
+                formControlName="type"
                 class="form-control"
                 [class.error]="campaignForm.get('type')?.invalid && campaignForm.get('type')?.touched">
                 <option value="">Select a campaign type</option>
@@ -72,10 +72,10 @@ import { MarketingService, MarketingCampaign, CreateCampaignDto } from '../servi
               </div>
             </div>
           </div>
-          
+
           <div class="form-section">
             <h2>Target Audience</h2>
-            
+
             <div class="form-group">
               <label for="audienceType">Audience Type</label>
               <select id="audienceType" formControlName="audienceType" class="form-control">
@@ -86,46 +86,46 @@ import { MarketingService, MarketingCampaign, CreateCampaignDto } from '../servi
                 <option value="trial">Trial Users</option>
               </select>
             </div>
-            
+
             <div class="form-row">
               <div class="form-group">
                 <label for="startDate">Start Date</label>
                 <input type="date" id="startDate" formControlName="startDate" class="form-control">
               </div>
-              
+
               <div class="form-group">
                 <label for="endDate">End Date</label>
                 <input type="date" id="endDate" formControlName="endDate" class="form-control">
               </div>
             </div>
           </div>
-          
+
           <div class="form-section">
             <h2>Variants</h2>
             <p>Define the different versions of your campaign for testing</p>
-            
+
             <div class="variant-section">
               <h3>Control Variant (A)</h3>
               <p>This is your baseline version for comparison</p>
               <div class="form-group">
                 <label for="controlDescription">Description</label>
-                <textarea 
-                  id="controlDescription" 
-                  formControlName="controlDescription" 
+                <textarea
+                  id="controlDescription"
+                  formControlName="controlDescription"
                   class="form-control"
                   rows="2"
                   placeholder="Describe the control variant"></textarea>
               </div>
             </div>
-            
+
             <div class="variant-section">
               <h3>Variation (B)</h3>
               <p>This is the alternative version you want to test</p>
               <div class="form-group">
                 <label for="variationDescription">Description</label>
-                <textarea 
-                  id="variationDescription" 
-                  formControlName="variationDescription" 
+                <textarea
+                  id="variationDescription"
+                  formControlName="variationDescription"
                   class="form-control"
                   rows="2"
                   placeholder="Describe the variation"></textarea>
@@ -295,22 +295,22 @@ import { MarketingService, MarketingCampaign, CreateCampaignDto } from '../servi
       .campaign-editor {
         padding: 1rem;
       }
-      
+
       .content {
         padding: 1rem;
       }
-      
+
       .header {
         flex-direction: column;
         gap: 1rem;
         align-items: flex-start;
       }
-      
+
       .actions {
         width: 100%;
         justify-content: space-between;
       }
-      
+
       .form-row {
         grid-template-columns: 1fr;
       }
@@ -322,7 +322,7 @@ export class CampaignEditorComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly fb = inject(FormBuilder);
-  
+
   campaignForm!: FormGroup;
   isEditMode = signal(false);
   campaignId = signal<string | null>(null);
@@ -390,9 +390,9 @@ export class CampaignEditorComponent implements OnInit {
     }
 
     this.isSaving.set(true);
-    
+
     const formValue = this.campaignForm.value;
-    
+
     // For update, we need to convert to Partial<MarketingCampaign>
     if (this.isEditMode() && this.campaignId()) {
       const updateData: Partial<MarketingCampaign> = {

@@ -10,7 +10,7 @@
 </div>
 
 <div class="palette">
-  <div *ngFor="let blockType of blockTypes" 
+  <div *ngFor="let blockType of blockTypes"
        class="palette-item"
        (click)="onBlockClick(blockType.type)"
        [attr.aria-label]="'Add ' + blockType.label + ' block to widget'"

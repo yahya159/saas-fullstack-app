@@ -48,7 +48,7 @@ export class TemplateGalleryComponent {
       '2-column spotlight': '2-column-spotlight',
       'Comparison matrix': 'comparison-matrix'
     };
-    
+
     const type = typeMap[templateName] || 'default';
     console.log('Template name:', templateName, 'Mapped to type:', type);
     return type;
@@ -60,7 +60,7 @@ export class TemplateGalleryComponent {
       '2-column spotlight': 'assets/templates/2-column-spotlight.svg',
       'Comparison matrix': 'assets/templates/comparison-matrix.svg'
     };
-    
+
     const image = imageMap[templateName] || 'assets/templates/3-column-classic.svg';
     console.log('Template name:', templateName, 'Mapped to image:', image);
     return image;

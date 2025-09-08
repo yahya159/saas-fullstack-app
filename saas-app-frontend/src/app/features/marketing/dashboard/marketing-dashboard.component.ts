@@ -10,7 +10,7 @@ import { MarketingMenuComponent } from '../marketing-menu.component';
   imports: [CommonModule, RouterModule, MarketingMenuComponent],
   template: `
     <app-marketing-menu></app-marketing-menu>
-    
+
     <div class="marketing-dashboard">
       <div class="dashboard-header">
         <h1>Marketing & Analytics Dashboard</h1>
@@ -505,7 +505,7 @@ import { MarketingMenuComponent } from '../marketing-menu.component';
       .marketing-dashboard {
         padding: 1rem;
       }
-      
+
       .dashboard-content {
         grid-template-columns: 1fr;
         gap: 2rem;
@@ -515,12 +515,12 @@ import { MarketingMenuComponent } from '../marketing-menu.component';
         flex-direction: column;
         align-items: center;
       }
-      
+
       .dashboard-stats {
         grid-template-columns: 1fr 1fr;
       }
     }
-    
+
     @media (max-width: 480px) {
       .dashboard-stats {
         grid-template-columns: 1fr;
