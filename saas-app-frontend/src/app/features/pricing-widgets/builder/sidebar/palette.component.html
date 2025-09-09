@@ -9,13 +9,15 @@
   <p>Drag and drop blocks to build your widget</p>
 </div>
 
-<div class="palette">
+<!-- Added cdkDropList with ID 'palette' and connected to columns -->
+<div class="palette" cdkDropList id="palette" [cdkDropListConnectedTo]="getConnectedDropLists()">
   <div *ngFor="let blockType of blockTypes"
        class="palette-item"
+       cdkDrag
+       [cdkDragData]="blockType.type"
+       (cdkDragStarted)="onDragStarted($event)"
+       (cdkDragEnded)="onDragEnded($event)"
        [attr.data-block-type]="blockType.type"
-       (click)="onBlockClick(blockType.type)"
-       (keydown.enter)="onBlockClick(blockType.type)"
-       (keydown.space)="onBlockClick(blockType.type)"
        [attr.aria-label]="'Add ' + blockType.label + ' block to widget'"
        tabindex="0"
        role="button">
@@ -26,6 +28,13 @@
         <p>{{ blockType.description }}</p>
       </div>
       <div class="add-indicator" aria-hidden="true">+</div>
+    </div>
+    <!-- Drag preview -->
+    <div class="palette-item-preview" *cdkDragPreview>
+      <div class="preview-content">
+        <div class="block-icon">{{ blockType.icon }}</div>
+        <span class="block-label">{{ blockType.label }}</span>
+      </div>
     </div>
   </div>
 </div>

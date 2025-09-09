@@ -99,22 +99,37 @@ export class WidgetStoreService {
   }
 
   attachPlan(widgetId: string, planId: string): void {
-    this.mockApi.updateWidget(widgetId, { attachedPlanId: planId });
+    console.log('=== WIDGET STORE: attachPlan ===');
+    console.log('Parameters:', { widgetId, planId });
+    
+    // Handle empty planId (no plan attached)
+    const updates = planId ? { attachedPlanId: planId } : { attachedPlanId: undefined };
+    
+    console.log('Updating widget with attached plan:', updates);
+    this.mockApi.updateWidget(widgetId, updates);
   }
 
   addBlockToColumn(widgetId: string, columnId: string, blockType: WidgetBlockType): WidgetBlock {
-    console.log('Adding block to column:', widgetId, columnId, blockType);
+    console.log('=== WIDGET STORE: addBlockToColumn ===');
+    console.log('Parameters:', { widgetId, columnId, blockType });
+    
     const widget = this.mockApi.getWidget(widgetId);
     if (!widget) {
       console.error('Widget not found:', widgetId);
       throw new Error('Widget not found');
     }
 
+    console.log('Widget found:', widget.id);
+    console.log('Widget columns:', widget.columns.map(col => ({ id: col.id, order: col.order })));
+
     const column = widget.columns.find(col => col.id === columnId);
     if (!column) {
       console.error('Column not found:', columnId);
+      console.error('Available columns:', widget.columns.map(col => col.id));
       throw new Error('Column not found');
     }
+
+    console.log('Column found:', column.id);
 
     const newBlock: WidgetBlock = {
       id: this.generateId(),
@@ -132,6 +147,12 @@ export class WidgetStoreService {
     );
 
     console.log('Updating widget with new block');
+    console.log('Updated columns:', updatedColumns.map(col => ({ 
+      id: col.id, 
+      order: col.order,
+      blockCount: col.blocks.length 
+    })));
+    
     this.mockApi.updateWidget(widgetId, { columns: updatedColumns });
     this.selectedBlockId.set(newBlock.id);
     return newBlock;
@@ -216,6 +237,29 @@ export class WidgetStoreService {
       )
     }));
 
+    this.mockApi.updateWidget(widgetId, { columns: updatedColumns });
+  }
+
+  updateBlockPlanTier(widgetId: string, blockId: string, planTierId: string): void {
+    console.log('=== WIDGET STORE: updateBlockPlanTier ===');
+    console.log('Parameters:', { widgetId, blockId, planTierId });
+    
+    const widget = this.mockApi.getWidget(widgetId);
+    if (!widget) {
+      console.error('Widget not found:', widgetId);
+      return;
+    }
+
+    const updatedColumns = widget.columns.map(col => ({
+      ...col,
+      blocks: col.blocks.map(block =>
+        block.id === blockId ? { ...block, planTierId } : block
+      )
+    }));
+
+    console.log('Updating widget with new planTierId');
+    console.log('Updated columns:', updatedColumns);
+    
     this.mockApi.updateWidget(widgetId, { columns: updatedColumns });
   }
 
@@ -345,7 +389,13 @@ export class WidgetStoreService {
   }
 
   updateWidget(widgetId: string, updates: Partial<WidgetInstance>): WidgetInstance | undefined {
-    return this.mockApi.updateWidget(widgetId, updates);
+    console.log('=== WIDGET STORE: updateWidget ===');
+    console.log('Parameters:', { widgetId, updates });
+    
+    const result = this.mockApi.updateWidget(widgetId, updates);
+    
+    console.log('Update result:', result);
+    return result;
   }
 
   private renderBlockHtml(block: WidgetBlock, plan: Plan | null): string {

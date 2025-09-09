@@ -85,7 +85,11 @@
 
       <div *ngIf="isPriceCardBlock() || isFeatureListBlock()" class="form-group">
         <label for="plan-tier">Plan Tier</label>
-        <select id="plan-tier" formControlName="planTierId">
+        <div *ngIf="!attachedPlan()" class="no-plan-message">
+          <p>Please attach a plan to the widget to select tiers.</p>
+          <p>Go to Widget Properties and select a plan from the "Attached Plan" dropdown.</p>
+        </div>
+        <select *ngIf="attachedPlan()" id="plan-tier" formControlName="planTierId">
           <option value="">Select a tier</option>
           <option *ngFor="let tier of getAvailableTiers()" [value]="tier.id">
             {{ tier.name }} - ${{ tier.monthlyPrice }}/month

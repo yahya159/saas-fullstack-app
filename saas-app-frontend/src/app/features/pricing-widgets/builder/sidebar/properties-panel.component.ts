@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject, OnInit } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, OnInit, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { WidgetStoreService } from '../../state/widget-store.service';
@@ -26,6 +26,25 @@ export class PropertiesPanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeForms();
+    
+    // Create effects to populate forms when signals change
+    effect(() => {
+      const block = this.selectedBlock();
+      if (block) {
+        this.populateBlockForm(block.block);
+      } else {
+        this.blockForm.reset();
+      }
+    });
+    
+    effect(() => {
+      const widget = this.selectedWidget();
+      if (widget) {
+        this.populateWidgetForm(widget);
+      } else {
+        this.widgetForm.reset();
+      }
+    });
   }
 
   private initializeForms(): void {
@@ -57,25 +76,60 @@ export class PropertiesPanelComponent implements OnInit {
     });
   }
 
+  private populateBlockForm(block: any): void {
+    this.blockForm.patchValue({
+      text: block.text || '',
+      planTierId: block.planTierId || '',
+      width: block.style?.width || null,
+      textAlign: block.style?.textAlign || 'left',
+      radius: block.style?.radius || null,
+      padding: block.style?.padding || null,
+      elevation: block.style?.elevation || 0
+    });
+  }
+
+  private populateWidgetForm(widget: any): void {
+    console.log('=== PROPERTIES PANEL: populateWidgetForm ===');
+    console.log('Widget:', widget);
+    console.log('Available plans:', this.plans());
+    
+    this.widgetForm.patchValue({
+      name: widget.name || '',
+      attachedPlanId: widget.attachedPlanId || '',
+      gap: widget.style?.gap || 16,
+      background: widget.style?.background || '#ffffff',
+      maxWidth: widget.style?.maxWidth || 1200
+    });
+  }
+
   private updateBlockProperties(value: Record<string, unknown>): void {
+    console.log('=== PROPERTIES PANEL: updateBlockProperties ===');
+    console.log('Value:', value);
+    
     const selectedBlock = this.selectedBlock();
     const selectedWidget = this.selectedWidget();
     
-    if (!selectedBlock || !selectedWidget) return;
+    if (!selectedBlock || !selectedWidget) {
+      console.log('No selected block or widget');
+      return;
+    }
 
     const { text, planTierId, ...style } = value;
     
+    console.log('Extracted values:', { text, planTierId, style });
+    
     if (text !== undefined && typeof text === 'string') {
+      console.log('Updating block text:', text);
       this.widgetStore.updateBlockText(selectedWidget.id, selectedBlock.block.id, text);
     }
     
-    if (planTierId !== undefined) {
-      // Update the block's planTierId directly
-      // This would need to be handled differently in the store
-      // TODO: Implement planTierId update in the store
+    if (planTierId !== undefined && planTierId !== null) {
+      console.log('Updating block planTierId:', planTierId);
+      this.widgetStore.updateBlockPlanTier(selectedWidget.id, selectedBlock.block.id, planTierId as string);
     }
     
     if (Object.keys(style).length > 0) {
+      console.log('Updating block style:', style);
       this.widgetStore.updateBlockStyle(selectedWidget.id, selectedBlock.block.id, style);
     }
   }
@@ -83,6 +137,12 @@ export class PropertiesPanelComponent implements OnInit {
   private updateWidgetProperties(value: Record<string, unknown>): void {
     const selectedWidget = this.selectedWidget();
     if (!selectedWidget) return;
+
+    // Special handling for attachedPlanId
+    if (value.hasOwnProperty('attachedPlanId')) {
+      console.log('Updating attached plan ID:', value['attachedPlanId']);
+      this.widgetStore.attachPlan(selectedWidget.id, value['attachedPlanId'] as string);
+    }
 
     this.widgetStore.updateWidget(selectedWidget.id, value);
   }

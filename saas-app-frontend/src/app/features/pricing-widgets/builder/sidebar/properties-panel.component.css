@@ -107,6 +107,23 @@
   min-height: 80px;
 }
 
+.no-plan-message {
+  padding: 1rem;
+  background: #fff8e6;
+  border: 1px solid #ffd566;
+  border-radius: 6px;
+  color: #8a6d3b;
+}
+
+.no-plan-message p {
+  margin: 0.25rem 0;
+  font-size: 0.875rem;
+}
+
+.no-plan-message p:first-child {
+  font-weight: 500;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .properties-panel {

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CdkDragDrop, CdkDropList, CdkDrag, moveItemInArray } from '@angular/cdk/drag-drop';
 import { WidgetStoreService } from '../../state/widget-store.service';
@@ -16,25 +16,35 @@ type ColumnBlocks = WidgetBlock[];
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true
 })
-export class CanvasComponent {
+export class CanvasComponent implements OnInit {
   private widgetStore = inject(WidgetStoreService);
 
   selectedWidget = this.widgetStore.selectedWidget;
   selectedBlockId = this.widgetStore.selectedBlockId;
   liveRegionMessage = signal<string>('');
 
+  ngOnInit(): void {
+    console.log('Canvas component initialized');
+  }
+
   onDrop(event: CdkDragDrop<ColumnBlocks>): void {
-    console.log('Drop event:', event);
+    console.log('=== DROP EVENT TRIGGERED ===');
+    console.log('Drop event object:', event);
+    console.log('Previous container ID:', event.previousContainer.id);
+    console.log('Current container ID:', event.container.id);
+    console.log('Is same container:', event.previousContainer === event.container);
+    console.log('Item data:', event.item.data);
+    console.log('Previous index:', event.previousIndex);
+    console.log('Current index:', event.currentIndex);
+    
     const widget = this.selectedWidget();
     if (!widget) {
       console.log('No widget selected');
       return;
     }
 
-    console.log('Previous container ID:', event.previousContainer.id);
-    console.log('Current container ID:', event.container.id);
-    console.log('Is same container:', event.previousContainer === event.container);
-    console.log('Item data:', event.item.data);
+    console.log('Widget ID:', widget.id);
+    console.log('Widget columns:', widget.columns.map(col => ({ id: col.id, order: col.order })));
 
     if (event.previousContainer === event.container) {
       // Reordering within the same column
@@ -54,14 +64,18 @@ export class CanvasComponent {
       
       console.log('Moving between containers:', fromColumnId, '->', toColumnId);
       
+      // Debug: Check if we can find the target column
+      const toColumn = widget.columns.find(col => col.id === toColumnId);
+      console.log('Target column found:', toColumn);
+      
       if (fromColumnId === 'palette') {
         // Adding new block from palette
         console.log('Adding new block from palette');
         const blockType = event.item.data as WidgetBlockType;
         console.log('Block type:', blockType);
         if (blockType) {
+          console.log('Calling addBlockToColumn with:', widget.id, toColumnId, blockType);
           this.widgetStore.addBlockToColumn(widget.id, toColumnId, blockType);
-          const toColumn = widget.columns.find(col => col.id === toColumnId);
           this.announceToScreenReader(`Added ${blockType} block to column ${toColumn ? toColumn.order + 1 : 'unknown'}`);
         } else {
           console.error('Block type is undefined');
@@ -70,7 +84,6 @@ export class CanvasComponent {
         // Moving existing block between columns
         console.log('Moving existing block between columns');
         const fromColumn = widget.columns.find(col => col.id === fromColumnId);
-        const toColumn = widget.columns.find(col => col.id === toColumnId);
         if (fromColumn) {
           const block = fromColumn.blocks[event.previousIndex];
           this.widgetStore.moveBlockAcrossColumns(
@@ -210,9 +223,16 @@ export class CanvasComponent {
 
   getConnectedDropLists(): string[] {
     const widget = this.selectedWidget();
-    if (!widget) return [];
+    if (!widget) {
+      console.log('No widget selected, returning palette for connected drop lists');
+      // Even when no widget is selected, we still need to return the palette
+      // to maintain the connection for when a widget is selected
+      return ['palette'];
+    }
     
     // Return all column IDs plus the palette ID
-    return [...widget.columns.map(col => col.id), 'palette'];
+    const connectedLists = [...widget.columns.map(col => col.id), 'palette'];
+    console.log('Connected drop lists:', connectedLists);
+    return connectedLists;
   }
 }

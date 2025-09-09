@@ -282,16 +282,23 @@ export class MockApiService {
   }
 
   updateWidget(id: string, updates: Partial<WidgetInstance>): WidgetInstance | undefined {
+    console.log('=== MOCK API: updateWidget ===');
+    console.log('Parameters:', { id, updates });
+    
     const widgets = this.widgets().map(w => 
       w.id === id ? { ...w, ...updates } : w
     );
+    
+    console.log('Updated widgets array:', widgets);
     
     this.updateCatalog({
       ...this.catalogSignal(),
       widgets
     });
     
-    return widgets.find(w => w.id === id);
+    const updatedWidget = widgets.find(w => w.id === id);
+    console.log('Updated widget:', updatedWidget);
+    return updatedWidget;
   }
 
   deleteWidget(id: string): boolean {

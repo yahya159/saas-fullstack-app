@@ -1,5 +1,6 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CdkDrag, CdkDropList } from '@angular/cdk/drag-drop';
 import { WidgetStoreService } from '../../state/widget-store.service';
 import { WidgetBlockType } from '../../../../core/models/pricing.models';
 
@@ -7,11 +8,11 @@ import { WidgetBlockType } from '../../../../core/models/pricing.models';
   selector: 'app-palette',
   templateUrl: './palette.component.html',
   styleUrls: ['./palette.component.css'],
-  imports: [CommonModule],
+  imports: [CommonModule, CdkDrag, CdkDropList],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true
 })
-export class PaletteComponent {
+export class PaletteComponent implements OnInit {
   private widgetStore = inject(WidgetStoreService);
 
   readonly blockTypes: { type: WidgetBlockType; label: string; description: string; icon: string }[] = [
@@ -53,32 +54,28 @@ export class PaletteComponent {
     }
   ];
 
-  onBlockClick(blockType: WidgetBlockType): void {
-    console.log('Block clicked:', blockType);
-    const selectedWidget = this.widgetStore.selectedWidget();
-    if (!selectedWidget) {
-      console.log('No widget selected');
-      alert('Please select a widget first');
-      return;
-    }
+  ngOnInit(): void {
+    console.log('Palette component initialized');
+  }
 
-    // Add block to the first column by default
-    if (selectedWidget.columns.length > 0) {
-      const firstColumnId = selectedWidget.columns[0].id;
-      console.log('Adding block to column:', firstColumnId);
-      this.widgetStore.addBlockToColumn(selectedWidget.id, firstColumnId, blockType);
-      
-      // Provide visual feedback
-      const blockElement = document.querySelector(`[data-block-type="${blockType}"]`);
-      if (blockElement) {
-        blockElement.classList.add('block-added-feedback');
-        setTimeout(() => {
-          blockElement.classList.remove('block-added-feedback');
-        }, 1000);
-      }
-    } else {
-      console.log('No columns available');
-      alert('Please add a column first before adding blocks');
+  onDragStarted(event: any): void {
+    console.log('Palette drag started:', event);
+    document.body.classList.add('dragging-from-palette');
+  }
+
+  onDragEnded(event: any): void {
+    console.log('Palette drag ended:', event);
+    document.body.classList.remove('dragging-from-palette');
+  }
+
+  getConnectedDropLists(): string[] {
+    // Get the selected widget from the store
+    const widget = this.widgetStore.selectedWidget();
+    if (!widget) {
+      return [];
     }
+    
+    // Return all column IDs to connect to
+    return widget.columns.map(col => col.id);
   }
 }

@@ -69,26 +69,21 @@
 }
 
 .add-indicator {
-  color: var(--accent-primary, #007bff);
-  font-size: 1.25rem;
-  font-weight: bold;
-  margin-left: auto;
-  opacity: 0.7;
-  transition: all 0.2s ease;
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   background: var(--accent-primary-soft, rgba(0, 123, 255, 0.1));
   border-radius: 50%;
+  font-weight: bold;
+  color: var(--accent-primary, #007bff);
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
 .palette-item:hover .add-indicator {
   opacity: 1;
-  background: var(--accent-primary, #007bff);
-  color: white;
-  transform: scale(1.1);
 }
 
 .block-added-feedback {
@@ -132,6 +127,31 @@
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
+/* Custom drag preview */
+.palette-item-preview {
+  background: var(--accent-primary, #007bff);
+  color: white;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.palette-item-preview .block-icon {
+  font-size: 1rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.block-label {
+  font-weight: 500;
+}
+
 /* Header for the palette section */
 .palette-header {
   margin-bottom: 1.25rem;
@@ -152,4 +172,9 @@
   font-size: 0.875rem;
   color: var(--text-secondary, #666);
   line-height: 1.5;
+}
+
+/* Dragging state */
+.dragging-from-palette * {
+  cursor: grabbing !important;
 }
