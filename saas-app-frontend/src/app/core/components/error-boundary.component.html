@@ -1,0 +1,73 @@
+<div class="error-boundary" [ngClass]="errorClasses()" data-testid="error-boundary">
+  <div class="error-content">
+    <!-- Error Icon -->
+    <div class="error-icon">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="15" y1="9" x2="9" y2="15"/>
+        <line x1="9" y1="9" x2="15" y2="15"/>
+      </svg>
+    </div>
+
+    <!-- Error Message -->
+    <div class="error-message">
+      <h3 class="error-title">Oops! Something went wrong</h3>
+      <p class="error-description">{{ errorMessage() }}</p>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="error-actions">
+      <button 
+        *ngIf="showRetry()" 
+        class="btn btn-primary" 
+        (click)="onRetry()"
+        [disabled]="isRetrying()"
+      >
+        <span *ngIf="!isRetrying()">Try Again</span>
+        <span *ngIf="isRetrying()">Retrying...</span>
+      </button>
+
+      <button 
+        *ngIf="showDetails()" 
+        class="btn btn-outline" 
+        (click)="onToggleDetails()"
+      >
+        {{ showErrorDetails() ? 'Hide Details' : 'Show Details' }}
+      </button>
+
+      <button 
+        class="btn btn-outline" 
+        (click)="onReportError()"
+        title="Report this error"
+      >
+        Report Error
+      </button>
+    </div>
+
+    <!-- Error Details -->
+    <div *ngIf="showErrorDetails() && errorDetails()" class="error-details">
+      <div class="error-details-header">
+        <h4>Error Details</h4>
+        <button class="btn btn-sm btn-outline" (click)="onCopyError()">
+          Copy Details
+        </button>
+      </div>
+      
+      <div class="error-details-content">
+        <div class="error-detail-item">
+          <strong>Error:</strong> {{ errorDetails()?.name }}
+        </div>
+        <div class="error-detail-item">
+          <strong>Message:</strong> {{ errorDetails()?.message }}
+        </div>
+        <div class="error-detail-item">
+          <strong>Time:</strong> {{ errorDetails()?.timestamp }}
+        </div>
+        <div *ngIf="errorDetails()?.stack" class="error-detail-item">
+          <strong>Stack Trace:</strong>
+          <pre class="error-stack">{{ errorDetails()?.stack }}</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

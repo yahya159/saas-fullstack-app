@@ -1,0 +1,105 @@
+<div class="preview-container" [ngClass]="containerClass()" (keydown)="onKeyDown($event)" tabindex="0" data-testid="preview-container">
+  <!-- Header Controls -->
+  <header class="preview-header" *ngIf="!isFullscreen()">
+    <div class="header-left">
+      <button class="btn btn-outline" (click)="goBack()">
+        ← Back to Builder
+      </button>
+      <h1 class="preview-title">Widget Preview</h1>
+    </div>
+    
+    <div class="header-right">
+      <button class="btn btn-outline" (click)="refreshPreview()" title="Refresh Preview (Ctrl+R)">
+        🔄 Refresh
+      </button>
+      <button class="btn btn-primary" (click)="toggleFullscreen()" title="Toggle Fullscreen (Ctrl+F)">
+        🖥️ Fullscreen
+      </button>
+    </div>
+  </header>
+
+  <!-- Device Toggle Controls -->
+  <div class="device-controls" *ngIf="showDeviceToggle()" data-testid="device-controls">
+    <div class="device-toggle">
+      <h3>Device Preview</h3>
+      <div class="device-buttons">
+        <button 
+          *ngFor="let device of deviceSizes()" 
+          class="device-btn"
+          [class.device-btn--active]="isCurrentDeviceSize(device)"
+          (click)="setDeviceSize(device)"
+          [title]="getDeviceDescription(device)">
+          <span class="device-icon">{{ getDeviceIcon(device) }}</span>
+          <span class="device-name">{{ device.name }}</span>
+          <span class="device-size">{{ device.width }}px</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Template Switcher -->
+  <div class="template-switcher" *ngIf="showTemplateSwitcher()" data-testid="template-switcher">
+    <div class="template-controls">
+      <h3>Live Templates</h3>
+      <div class="template-list">
+        <button 
+          *ngFor="let template of availableTemplates$ | async" 
+          class="template-btn"
+          (click)="switchToTemplate(template.id)"
+          [title]="getTemplateDescription(template)">
+          <span class="template-name">{{ getTemplateName(template) }}</span>
+          <span class="template-info">{{ getTemplateDescription(template) }}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-state" *ngIf="isLoading$ | async">
+    <div class="loading-spinner"></div>
+    <p>Loading widget preview...</p>
+  </div>
+
+  <!-- Error State -->
+  <div class="error-state" *ngIf="error$ | async as error">
+    <div class="error-content">
+      <h3>Preview Error</h3>
+      <p>{{ error }}</p>
+      <button class="btn btn-primary" (click)="refreshPreview()">Retry</button>
+    </div>
+  </div>
+
+  <!-- Preview Frame -->
+  <div class="preview-frame-container" *ngIf="!(isLoading$ | async) && !(error$ | async)" data-testid="preview-frame">
+    <div class="preview-frame" [style]="previewFrameStyle()">
+      <div class="preview-content" [innerHTML]="previewHtml()"></div>
+    </div>
+    
+    <!-- Device Frame Overlay -->
+    <div class="device-frame" *ngIf="!isFullscreen()">
+      <div class="device-frame-header">
+        <span class="device-frame-title">{{ getCurrentDeviceSize().name }} Preview</span>
+        <span class="device-frame-size">{{ getCurrentDeviceSize().width }} × {{ getCurrentDeviceSize().height }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fullscreen Controls -->
+  <div class="fullscreen-controls" *ngIf="isFullscreen()">
+    <button class="btn btn-outline fullscreen-exit" (click)="toggleFullscreen()">
+      ✕ Exit Fullscreen
+    </button>
+  </div>
+
+  <!-- Keyboard Shortcuts Help -->
+  <div class="shortcuts-help" *ngIf="!isFullscreen()">
+    <div class="shortcuts-content">
+      <h4>Keyboard Shortcuts</h4>
+      <ul>
+        <li><kbd>Ctrl + F</kbd> Toggle Fullscreen</li>
+        <li><kbd>Ctrl + R</kbd> Refresh Preview</li>
+        <li><kbd>Esc</kbd> Exit Fullscreen</li>
+      </ul>
+    </div>
+  </div>
+</div>

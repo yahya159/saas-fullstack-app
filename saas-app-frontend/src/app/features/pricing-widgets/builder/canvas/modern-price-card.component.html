@@ -1,0 +1,72 @@
+<div 
+  class="price-card" 
+  [ngClass]="cardClasses()"
+  (mouseenter)="onMouseEnter()"
+  (mouseleave)="onMouseLeave()"
+  [attr.aria-label]="tierName() + ' pricing tier'"
+  role="article"
+>
+  <!-- Recommended Badge -->
+  <div *ngIf="badgeText()" class="price-card__badge">
+    <span class="badge-text">{{ badgeText() }}</span>
+  </div>
+
+  <!-- Card Header -->
+  <header class="price-card__header">
+    <h3 class="price-card__title">{{ tierName() }}</h3>
+    <p *ngIf="tierDescription()" class="price-card__description">{{ tierDescription() }}</p>
+  </header>
+
+  <!-- Pricing Section -->
+  <div class="price-card__pricing">
+    <div class="price-display">
+      <span class="currency-symbol">{{ currencySymbol() }}</span>
+      <span class="price-amount">{{ originalPrice() }}</span>
+      <span class="price-period">{{ isYearly() ? '/year' : '/month' }}</span>
+    </div>
+    
+    <!-- Yearly Savings -->
+    <div *ngIf="savings()" class="savings-badge">
+      <span class="savings-text">Save {{ savings()!.percentage }}%</span>
+      <span class="savings-amount">{{ currencySymbol() }}{{ savings()!.amount }}/year</span>
+    </div>
+  </div>
+
+  <!-- Features Section -->
+  <div class="price-card__features">
+    <ul class="features-list">
+      <li *ngFor="let featureKey of tier$()?.features || []" class="feature-item">
+        <div class="feature-content">
+          <span class="feature-icon">{{ getFeatureIcon(featureKey) }}</span>
+          <span class="feature-text">{{ featureKey }}</span>
+          <span *ngIf="isPremiumFeature(featureKey)" class="premium-indicator" 
+                [title]="getFeatureTooltip(featureKey)">
+            ⭐
+          </span>
+        </div>
+        <div class="feature-tooltip" *ngIf="isPremiumFeature(featureKey)">
+          {{ getFeatureTooltip(featureKey) }}
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- CTA Section -->
+  <footer class="price-card__footer">
+    <button 
+      class="cta-button"
+      [class.cta-button--highlighted]="isHighlighted()"
+      (click)="onCtaClick()"
+      [attr.aria-label]="'Choose ' + tierName() + ' plan'"
+    >
+      <span class="cta-text">{{ ctaLabel() }}</span>
+      <span class="cta-arrow">→</span>
+    </button>
+  </footer>
+
+  <!-- Loading State -->
+  <div *ngIf="!tier$()" class="price-card__loading">
+    <div class="loading-spinner"></div>
+    <span>Loading tier data...</span>
+  </div>
+</div>

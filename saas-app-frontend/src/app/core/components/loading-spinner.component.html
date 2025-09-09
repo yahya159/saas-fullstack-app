@@ -1,0 +1,11 @@
+<div class="loading-container" [ngClass]="spinnerClasses()" data-testid="loading-spinner">
+  <div class="spinner">
+    <div class="spinner-ring"></div>
+    <div class="spinner-ring"></div>
+    <div class="spinner-ring"></div>
+  </div>
+  
+  <div *ngIf="text()" class="loading-text" [ngClass]="textClasses()">
+    {{ text() }}
+  </div>
+</div>

@@ -1,0 +1,60 @@
+<div class="pricing-container" [ngClass]="containerClasses()">
+  <!-- Pricing Toggle -->
+  <div *ngIf="showToggle() && hasMultipleTiers()" class="pricing-toggle-section">
+    <app-pricing-toggle
+      [isYearly]="isYearly()"
+      [monthlyLabel]="'Monthly'"
+      [yearlyLabel]="'Yearly'"
+      [showSavings]="true"
+      [savingsText]="'Save up to 20%'"
+      (toggleChange)="onToggleChange($event)"
+    ></app-pricing-toggle>
+  </div>
+
+  <!-- Pricing Table -->
+  <div class="pricing-table" [ngClass]="tableClasses()">
+    <!-- Single Tier Layout -->
+    <div *ngIf="!hasMultipleTiers()" class="single-tier-layout">
+      <div *ngFor="let tier of tiers()" class="single-tier-card">
+        <app-modern-price-card
+          [block]="block()"
+          [plan]="plan()"
+          [isYearly]="isYearly()"
+          [isRecommended]="isRecommendedTier(tier)"
+        ></app-modern-price-card>
+      </div>
+    </div>
+
+    <!-- Multiple Tiers Layout -->
+    <div *ngIf="hasMultipleTiers()" class="multiple-tiers-layout">
+      <div 
+        *ngFor="let tier of tiers(); let i = index" 
+        class="tier-card"
+        [style]="getCardStyle(i)"
+        (click)="onTierClick(tier)"
+      >
+        <app-modern-price-card
+          [block]="block()"
+          [plan]="plan()"
+          [isYearly]="isYearly()"
+          [isRecommended]="isRecommendedTier(tier)"
+        ></app-modern-price-card>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="!plan()" class="pricing-loading">
+    <div class="loading-spinner"></div>
+    <p>Loading pricing plans...</p>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="plan() && tiers().length === 0" class="pricing-empty">
+    <div class="empty-content">
+      <span class="empty-icon">💳</span>
+      <h3>No pricing tiers available</h3>
+      <p>This plan doesn't have any pricing tiers configured yet.</p>
+    </div>
+  </div>
+</div>
