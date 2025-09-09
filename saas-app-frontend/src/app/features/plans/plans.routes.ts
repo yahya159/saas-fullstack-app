@@ -20,5 +20,9 @@ export const plansRoutes: Routes = [
   {
     path: ':planId/add-features',
     loadComponent: () => import('./add-features/add-features.component').then(m => m.AddFeaturesComponent)
+  },
+  {
+    path: ':planId/feature-assignment',
+    loadComponent: () => import('./feature-assignment/feature-assignment.component').then(m => m.FeatureAssignmentComponent)
   }
 ];

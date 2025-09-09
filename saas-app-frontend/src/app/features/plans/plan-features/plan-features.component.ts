@@ -125,6 +125,12 @@ export class PlanFeaturesComponent implements OnInit, OnDestroy {
     this.router.navigate(['/plans', currentPlanId, 'add-features']);
   }
 
+  openFeatureAssignment() {
+    // Navigate to the feature assignment page
+    const currentPlanId = this.planId();
+    this.router.navigate(['/plans', currentPlanId, 'feature-assignment']);
+  }
+
   // Modal methods removed - using dedicated page instead
 
   // Feature addition now handled by dedicated page

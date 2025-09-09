@@ -180,4 +180,42 @@ export class WidgetBuilderComponent {
     };
     return previews[blockType] || 'Block';
   }
+
+  // Preview methods
+  previewWidget(): void {
+    const currentWidget = this.selectedWidget();
+    if (currentWidget) {
+      this.openPreviewInNewWindow(currentWidget.id);
+    } else {
+      console.warn('No widget selected for preview');
+    }
+  }
+
+  previewWidgetById(widgetId: string): void {
+    this.openPreviewInNewWindow(widgetId);
+  }
+
+  private openPreviewInNewWindow(widgetId: string): void {
+    const previewUrl = `/pricing-widgets/preview/${widgetId}`;
+    const windowFeatures = 'width=1200,height=800,scrollbars=yes,resizable=yes,toolbar=no,menubar=no,location=no,status=no';
+    
+    try {
+      const previewWindow = window.open(previewUrl, '_blank', windowFeatures);
+      
+      if (!previewWindow) {
+        // Fallback if popup was blocked
+        alert('Popup blocked! Please allow popups for this site and try again.');
+        // Alternative: navigate in same window
+        this.router.navigate([previewUrl]);
+      } else {
+        // Focus the new window
+        previewWindow.focus();
+        console.log(`Opened preview for widget ${widgetId} in new window`);
+      }
+    } catch (error) {
+      console.error('Error opening preview window:', error);
+      // Fallback: navigate in same window
+      this.router.navigate([previewUrl]);
+    }
+  }
 }

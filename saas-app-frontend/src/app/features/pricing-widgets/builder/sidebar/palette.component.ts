@@ -58,6 +58,7 @@ export class PaletteComponent {
     const selectedWidget = this.widgetStore.selectedWidget();
     if (!selectedWidget) {
       console.log('No widget selected');
+      alert('Please select a widget first');
       return;
     }
 
@@ -66,8 +67,18 @@ export class PaletteComponent {
       const firstColumnId = selectedWidget.columns[0].id;
       console.log('Adding block to column:', firstColumnId);
       this.widgetStore.addBlockToColumn(selectedWidget.id, firstColumnId, blockType);
+      
+      // Provide visual feedback
+      const blockElement = document.querySelector(`[data-block-type="${blockType}"]`);
+      if (blockElement) {
+        blockElement.classList.add('block-added-feedback');
+        setTimeout(() => {
+          blockElement.classList.remove('block-added-feedback');
+        }, 1000);
+      }
     } else {
       console.log('No columns available');
+      alert('Please add a column first before adding blocks');
     }
   }
 }

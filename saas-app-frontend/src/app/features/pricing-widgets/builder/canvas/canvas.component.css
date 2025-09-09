@@ -33,7 +33,8 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow: auto;
+  overflow: visible;
+  min-height: 600px;
 }
 
 .canvas-header {
@@ -64,6 +65,8 @@
   margin: 0 auto;
   width: 100%;
   max-width: 1400px;
+  min-height: 500px;
+  overflow: visible;
 }
 
 .widget-columns {

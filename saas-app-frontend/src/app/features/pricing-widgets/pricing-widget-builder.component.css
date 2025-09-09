@@ -6,6 +6,7 @@
   margin: 0 auto;
   background: var(--bg-secondary);
   min-height: calc(100vh - 64px);
+  overflow-y: auto;
 }
 
 /* Page Header */
@@ -434,6 +435,7 @@
 @media (max-width: 768px) {
   .pricing-widget-builder {
     padding: var(--spacing-4);
+    overflow-x: hidden;
   }
 
   .page-header {
@@ -453,5 +455,17 @@
   .templates-grid,
   .widgets-grid {
     gap: var(--spacing-4);
+  }
+}
+
+/* Ensure proper scrolling on all devices */
+@media (max-width: 1024px) {
+  .pricing-widget-builder {
+    overflow-x: hidden;
+  }
+  
+  .templates-grid,
+  .widgets-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   }
 }

@@ -6,6 +6,10 @@ export const pricingWidgetsRoutes: Routes = [
     loadComponent: () => import('./builder/widget-builder.component').then(m => m.WidgetBuilderComponent)
   },
   {
+    path: 'preview/:id',
+    loadComponent: () => import('./preview/widget-preview.component').then(m => m.WidgetPreviewComponent)
+  },
+  {
     path: 'export',
     loadComponent: () => import('../widgets/widgets-export/widgets-export.component').then(m => m.WidgetsExportComponent)
   },

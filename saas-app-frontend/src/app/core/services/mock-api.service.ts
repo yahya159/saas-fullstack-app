@@ -168,6 +168,17 @@ export class MockApiService {
     return planFeature;
   }
 
+  updatePlanFeature(planFeatureId: string, updates: any): any {
+    // Mock implementation - in real app, this would update in backend
+    console.log('Updating plan feature:', planFeatureId, updates);
+    return { _id: planFeatureId, ...updates };
+  }
+
+  deletePlanFeature(planFeatureId: string): void {
+    // Mock implementation - in real app, this would delete from backend
+    console.log('Deleting plan feature:', planFeatureId);
+  }
+
   addPlan(plan: Omit<Plan, 'id'>): Plan {
     const newPlan: Plan = {
       ...plan,

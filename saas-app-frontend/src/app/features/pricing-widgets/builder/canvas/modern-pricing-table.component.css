@@ -3,14 +3,32 @@
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 3rem 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.pricing-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+  pointer-events: none;
 }
 
 .pricing-container--centered {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 400px;
+  min-height: 500px;
 }
 
 /* Pricing Toggle Section */
@@ -18,6 +36,8 @@
   display: flex;
   justify-content: center;
   margin-bottom: 3rem;
+  position: relative;
+  z-index: 10;
 }
 
 /* Pricing Table */
@@ -25,11 +45,13 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  position: relative;
+  z-index: 10;
 }
 
 .pricing-table--multiple {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
   align-items: stretch;
 }
@@ -63,11 +85,18 @@
 .tier-card {
   animation: fadeInUp 0.6s ease-out;
   cursor: pointer;
-  transition: transform 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
 }
 
+.tier-card:nth-child(1) { animation-delay: 0.1s; }
+.tier-card:nth-child(2) { animation-delay: 0.2s; }
+.tier-card:nth-child(3) { animation-delay: 0.3s; }
+.tier-card:nth-child(4) { animation-delay: 0.4s; }
+
 .tier-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-8px) scale(1.02);
+  z-index: 20;
 }
 
 /* Loading State */
@@ -149,23 +178,25 @@
 /* Responsive Design */
 @media (max-width: 1024px) {
   .pricing-container {
-    padding: 1.5rem;
+    padding: 2rem 1.5rem;
+    border-radius: 20px;
   }
   
   .pricing-table--multiple {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
   }
   
   .multiple-tiers-layout {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
   }
 }
 
 @media (max-width: 768px) {
   .pricing-container {
-    padding: 1rem;
+    padding: 1.5rem 1rem;
+    border-radius: 16px;
   }
   
   .pricing-toggle-section {
@@ -193,7 +224,8 @@
 
 @media (max-width: 480px) {
   .pricing-container {
-    padding: 0.75rem;
+    padding: 1rem 0.75rem;
+    border-radius: 12px;
   }
   
   .pricing-toggle-section {

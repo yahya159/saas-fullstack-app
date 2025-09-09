@@ -1,9 +1,10 @@
-import { Component, ChangeDetectionStrategy, inject, OnInit, OnDestroy, signal, computed } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, OnInit, OnDestroy, signal, computed, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Observable, Subject, takeUntil, combineLatest } from 'rxjs';
 import { WidgetPreviewService, DeviceSize } from '../../../core/services/widget-preview.service';
+import { WidgetStoreService } from '../state/widget-store.service';
 import { WidgetInstance } from '../../../core/models/pricing.models';
 
 @Component({
@@ -19,6 +20,7 @@ export class WidgetPreviewComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private sanitizer = inject(DomSanitizer);
   private widgetPreviewService = inject(WidgetPreviewService);
+  private widgetStore = inject(WidgetStoreService);
   
   private destroy$ = new Subject<void>();
   
@@ -26,6 +28,9 @@ export class WidgetPreviewComponent implements OnInit, OnDestroy {
   readonly isFullscreen = signal(false);
   readonly showDeviceToggle = signal(true);
   readonly showTemplateSwitcher = signal(true);
+  readonly currentWidgetId = signal<string | null>(null);
+  readonly isLoading = signal(false);
+  readonly error = signal<string | null>(null);
   
   // Service observables
   readonly currentWidget$ = this.widgetPreviewService.currentWidget$;
@@ -36,8 +41,14 @@ export class WidgetPreviewComponent implements OnInit, OnDestroy {
   
   // Computed properties
   readonly deviceSizes = computed(() => this.widgetPreviewService.deviceSizes);
+  readonly currentWidget = computed(() => {
+    const widgetId = this.currentWidgetId();
+    if (!widgetId) return null;
+    return this.widgetStore.widgets().find(w => w.id === widgetId) || null;
+  });
+  
   readonly previewHtml = computed(() => {
-    const widget = this.getCurrentWidget();
+    const widget = this.currentWidget();
     if (!widget) return '';
     
     const html = this.widgetPreviewService.generateWidgetHtml(widget);
@@ -93,7 +104,22 @@ export class WidgetPreviewComponent implements OnInit, OnDestroy {
 
   // Actions
   loadWidget(widgetId: string): void {
-    this.widgetPreviewService.loadWidget(widgetId);
+    this.isLoading.set(true);
+    this.error.set(null);
+    
+    try {
+      // Set the current widget ID to load from widget store
+      this.currentWidgetId.set(widgetId);
+      
+      // Also load in the preview service for device size management
+      this.widgetPreviewService.loadWidget(widgetId);
+      
+      this.isLoading.set(false);
+    } catch (err) {
+      this.error.set('Failed to load widget');
+      this.isLoading.set(false);
+      console.error('Error loading widget:', err);
+    }
   }
 
   switchToTemplate(templateId: string): void {
@@ -127,7 +153,7 @@ export class WidgetPreviewComponent implements OnInit, OnDestroy {
     return widget;
   }
 
-  private getCurrentDeviceSize(): DeviceSize {
+  getCurrentDeviceSize(): DeviceSize {
     let deviceSize: DeviceSize = this.widgetPreviewService.deviceSizes[0];
     this.currentDeviceSize$.pipe(takeUntil(this.destroy$)).subscribe(ds => deviceSize = ds);
     return deviceSize;
@@ -135,7 +161,8 @@ export class WidgetPreviewComponent implements OnInit, OnDestroy {
 
   private handleFullscreenChanges(): void {
     // Listen for fullscreen changes and update UI accordingly
-    this.isFullscreen$.pipe(takeUntil(this.destroy$)).subscribe(isFullscreen => {
+    effect(() => {
+      const isFullscreen = this.isFullscreen();
       if (isFullscreen) {
         document.body.classList.add('preview-fullscreen');
         this.showDeviceToggle.set(false);
