@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+out/
+
+# Environment files
+.env
+saas-app-backend/src/common/envs/.env
+saas-app-frontend/src/environments/environment.ts
+saas-app-frontend/src/environments/environment.prod.ts
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+# Database files
+data/db/
+*.db
+*.db.*
+
+# Temporary files
+tmp/
+temp/
+
+# Coverage reports
+coverage/
+
+# Package lock files
+package-lock.json
+yarn.lock.env
