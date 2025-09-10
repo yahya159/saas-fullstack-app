@@ -1,0 +1,7 @@
+npm error Lifecycle script `dev` failed with error:
+npm error workspace saas@0.0.0
+npm error location /Users/omarfilali/Desktop/saas-fullstack-app/saas-app-frontend
+npm error Missing script: "dev"
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run --workspace=saas@0.0.0

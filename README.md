@@ -43,6 +43,12 @@ Ce projet implémente un MVP de plateforme SaaS conforme aux spécifications fra
 - Intégration API avec contrôle d'accès
 - Analytics d'utilisation
 
+#### 4. Paiements Stripe pour Prévisualisation de Widgets
+- Intégration Stripe pour les paiements ponctuels
+- Flux de paiement sécurisé pour l'accès aux prévisualisations
+- Vérification côté serveur des paiements
+- Expérience utilisateur fluide avec redirection automatique
+
 ## Phase 3 - Réalisations Complètes
 
 ### ✅ Intégration des deux parties
@@ -79,17 +85,23 @@ npm run dev
 #### Backend (.env)
 ```bash
 NODE_ENV=development
-PORT=3000
+PORT=4000
 MONGODB_URI=mongodb://localhost:27017/saas_platform_dev
 JWT_SECRET=your-jwt-secret-here
 REDIS_HOST=localhost
 REDIS_PORT=6379
+STRIPE_SECRET_KEY=sk_test_your_secret_key_here
 ```
 
-#### Frontend (.env)
-```bash
-VITE_API_BASE_URL=http://localhost:3000/api
-VITE_APP_NAME=SaaS Platform MVP
+#### Frontend (src/environments.ts)
+```typescript
+export const environment = {
+  production: false,
+  apiUrl: 'http://localhost:4000/api',
+  stripe: {
+    publishableKey: 'pk_test_your_publishable_key_here'
+  }
+};
 ```
 
 ## Structure du Projet
@@ -103,7 +115,7 @@ saas-fullstack-app/
 │   │   ├── data/              # Modèles et schemas
 │   │   └── common/            # Utilitaires partagés
 │   ├── test/
-│   │   ├── integration/       # Tests d'intégration
+│   │   ├── integration/        # Tests d'intégration
 │   │   └── user-validation/   # Tests de validation utilisateur
 │   └── docs/                  # Documentation backend
 ├── saas-app-frontend/         # Frontend Angular
@@ -128,7 +140,7 @@ saas-fullstack-app/
 
 ### Développement
 ```bash
-npm run dev              # Démarrer backend + frontend
+npm run dev              # Démarrer tous les services (MongoDB, backend, frontend)
 npm run dev:backend      # Backend seulement
 npm run dev:frontend     # Frontend seulement
 ```
@@ -212,6 +224,23 @@ Chaque endpoint valide:
 3. Niveau de permission requis (READ/ADMIN)
 4. Contexte applicatif approprié
 
+## Intégration Stripe pour Prévisualisation de Widgets
+
+### Fonctionnalités
+- Paiement ponctuel de $5.00 pour accéder à la prévisualisation d'un widget
+- Redirection sécurisée vers Stripe Checkout
+- Vérification automatique du paiement après redirection
+- Affichage du widget uniquement après paiement réussi
+
+### Configuration
+1. **Backend**: Configurer les clés API Stripe dans le fichier `.env`
+2. **Frontend**: Configurer la clé publiable Stripe dans les variables d'environnement
+3. **Documentation**: Voir `STRIPE_WIDGET_PREVIEW_SETUP.md` pour les détails d'installation
+
+### API Endpoints
+- `POST /api/widgets/preview-payment/create-checkout-session` - Créer une session de paiement
+- `GET /api/widgets/preview-payment/verify-payment` - Vérifier le statut d'un paiement
+
 ## Monitoring et Observabilité
 
 ### Métriques Surveillées
@@ -278,6 +307,7 @@ Configuration sécurisée pour:
 - **Déploiement**: `/docs/deployment-guide.md`  
 - **Manuel Utilisateur**: `/docs/user-manual.md`
 - **Résolution Conflits**: `/docs/conflict-resolution-report.md`
+- **Stripe Integration**: `/STRIPE_WIDGET_PREVIEW_SETUP.md`
 
 ### Contact
 - Issues GitHub pour les bugs

@@ -1,0 +1,158 @@
+
+> saas_demo@0.0.1 start:dev
+> cross-env NODE_ENV=development  nest start --watch
+
+c[[90m10:11:18 PM[0m] Starting compilation in watch mode...
+
+[[90m10:11:22 PM[0m] Found 0 errors. Watching for file changes.
+
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+Database: mongodb://127.0.0.1:27017/saas_db
+JWT Secret configured: true
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +15ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAutomapperModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mCommonModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mApplicationContextModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSaasRoleDataModule dependencies initialized[39m[38;5;3m +2ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSaasUserRoleDataModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSaasMarketingCampaignDataModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSaasAnalyticsEventDataModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mWorkspaceConfigurationDataModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mHttpModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMapperServiceModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMapperControllersModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigHostModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mConfigModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mWidgetPreviewPaymentModule dependencies initialized[39m[38;5;3m +9ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mJwtModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseCoreModule dependencies initialized[39m[38;5;3m +5ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +7ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMongooseModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mUserDataModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSaasApplicationDataModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSaasSubscriberDataModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSaasCustomerAdminModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSaasPlanFeatureDataModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSaasPlanDataModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSaasFeatureDataModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSaasWidgetDataModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSaasworkspaceModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSaasApplicationConfigurationDataModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSaasPaymentMethodConfigurationDataModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSaasOfferDataModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSaasPricingDataModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSaasCurrencyDataModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSaasPaymentDataModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSaasSubscriptionDataModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSaasSubscriptionHistoryDataModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mRoleManagementServiceModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mMarketingServiceModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mUserServiceModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mApplicationModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mSecurityServiceModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPlanFeatureServiceModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mWidgetServiceModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPaymentServiceModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mOAuth2Module dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPlanFeatureControllerModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mWidgetControllerModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mGuardsModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mRoleManagementControllerModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAuthControllerModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAppController {/}:[39m[38;5;3m +13ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAuthCustomerController {/customer/auth}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customer/auth/signup, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customer/auth/login, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customer/auth/verify, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customer/auth/refresh, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customer/auth/logout, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customer/auth/logout-all, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/customer/auth/profile, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mOAuth2Controller {/auth}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/google, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/google/callback, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/microsoft, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/microsoft/callback, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/auth/oauth2/status, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mPlanFeatureController {/plan-features}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/plan-features/create, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/plan-features/plan/:planId/features, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/plan-features/feature/:featureId/plans, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/plan-features/plan/:planId/feature/:featureId, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/plan-features/plan/:planId/feature/:featureId, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/plan-features/plan/:planId/feature/:featureId/configuration, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/plan-features/plan/:planId/feature/:featureId/limits, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/plan-features/plan/:planId/feature/:featureId/enable, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/plan-features/plan/:planId/feature/:featureId/disable, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/plan-features/plan/:planId/feature/:featureId/toggle, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/plan-features/plan/:planId/feature/:featureId, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/plan-features/plan/:planId/features, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mWidgetController {/widgets}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/widgets/create, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/widgets, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/widgets/search, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/widgets/application/:applicationId, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/widgets/:widgetId, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/widgets/:widgetId, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/widgets/:widgetId/toggle-public, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/widgets/:widgetId/toggle-active, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/widgets/:widgetId, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mPublicWidgetController {/public/widgets}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/public/widgets/:widgetId, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/public/widgets/:widgetId/embed, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/public/widgets/:widgetId/config, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/public/widgets/:widgetId/embed-code, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mWidgetPreviewPaymentController {/api/widgets/preview-payment}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/widgets/preview-payment/create-checkout-session, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/api/widgets/preview-payment/verify-payment, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mRoleManagementController {/role-management}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/role-management/create, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/role-management/roles, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/role-management/roles/:roleId, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/role-management/roles/:roleId, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/role-management/assign, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/role-management/users/:userId/roles, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/role-management/users/:userId/permissions, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/role-management/users/:userId/applications/:applicationId/revoke, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/role-management/users/:userId/applications/:applicationId/role, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/role-management/users/:userId/check-permission, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/role-management/applications/:applicationId/team, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/role-management/check/marketing-dashboard/:userId/:applicationId, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/role-management/check/ab-tests/:userId/:applicationId, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/role-management/check/api-docs/:userId/:applicationId, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 63000  - [39m09/10/2025, 10:11:23 PM [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +3ms[39m
+🚀 Backend server is running on http://localhost:4000
+npm error Lifecycle script `start:dev` failed with error:
+npm error code 1
+npm error path /Users/omarfilali/Desktop/saas-fullstack-app/saas-app-backend
+npm error workspace saas_demo@0.0.1
+npm error location /Users/omarfilali/Desktop/saas-fullstack-app/saas-app-backend
+npm error command failed
+npm error command sh -c cross-env NODE_ENV=development  nest start --watch
+[95m[Nest] 63000  - [39m09/10/2025, 10:12:56 PM [95m  DEBUG[39m [38;5;3m[CacheService] [39m[95mCache MISS: blacklist:e038d0493b7c9e1210ec2582de9a9435aaa182165ff33def7c084bf878893aa4[39m
+[95m[Nest] 63000  - [39m09/10/2025, 10:13:01 PM [95m  DEBUG[39m [38;5;3m[CacheService] [39m[95mCache MISS: blacklist:e038d0493b7c9e1210ec2582de9a9435aaa182165ff33def7c084bf878893aa4[39m
+[95m[Nest] 63000  - [39m09/10/2025, 10:16:39 PM [95m  DEBUG[39m [38;5;3m[CacheService] [39m[95mCache MISS: blacklist:e038d0493b7c9e1210ec2582de9a9435aaa182165ff33def7c084bf878893aa4[39m

@@ -1,11 +1,12 @@
-import { Component, ChangeDetectionStrategy, inject, OnInit, OnDestroy, signal, computed, effect } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, OnInit, OnDestroy, signal, computed, effect, untracked } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { Observable, Subject, takeUntil, combineLatest } from 'rxjs';
+import { Observable, Subject, takeUntil, combineLatest, firstValueFrom } from 'rxjs';
 import { WidgetPreviewService, DeviceSize } from '../../../core/services/widget-preview.service';
 import { WidgetStoreService } from '../state/widget-store.service';
-import { WidgetInstance } from '../../../core/models/pricing.models';
+import { WidgetInstance, WidgetTemplate } from '../../../core/models/pricing.models';
+import { WidgetPreviewPaymentService } from '../../../core/services/widget-preview-payment.service';
 
 @Component({
   selector: 'app-widget-preview',
@@ -21,6 +22,7 @@ export class WidgetPreviewComponent implements OnInit, OnDestroy {
   private sanitizer = inject(DomSanitizer);
   private widgetPreviewService = inject(WidgetPreviewService);
   private widgetStore = inject(WidgetStoreService);
+  private paymentService = inject(WidgetPreviewPaymentService);
   
   private destroy$ = new Subject<void>();
   
@@ -31,13 +33,32 @@ export class WidgetPreviewComponent implements OnInit, OnDestroy {
   readonly currentWidgetId = signal<string | null>(null);
   readonly isLoading = signal(false);
   readonly error = signal<string | null>(null);
+  readonly paymentProcessed = signal(false);
+  readonly sessionId = signal<string | null>(null);
+  
+  // Handle fullscreen changes with effect as a field initializer
+  private fullscreenEffect = effect(() => {
+    const isFullscreen = this.isFullscreen();
+    // Use untracked to avoid circular dependencies
+    untracked(() => {
+      if (isFullscreen) {
+        document.body.classList.add('preview-fullscreen');
+        this.showDeviceToggle.set(false);
+        this.showTemplateSwitcher.set(false);
+      } else {
+        document.body.classList.remove('preview-fullscreen');
+        this.showDeviceToggle.set(true);
+        this.showTemplateSwitcher.set(true);
+      }
+    });
+  });
   
   // Service observables
   readonly currentWidget$ = this.widgetPreviewService.currentWidget$;
   readonly currentDeviceSize$ = this.widgetPreviewService.currentDeviceSize$;
   readonly isLoading$ = this.widgetPreviewService.isLoading$;
   readonly error$ = this.widgetPreviewService.error$;
-  readonly availableTemplates$ = this.widgetPreviewService.availableTemplates$;
+  readonly availableTemplates$ = this.widgetStore.templates; // Use templates from widget store instead
   
   // Computed properties
   readonly deviceSizes = computed(() => this.widgetPreviewService.deviceSizes);
@@ -90,16 +111,14 @@ export class WidgetPreviewComponent implements OnInit, OnDestroy {
         }
       });
     
-    // Load available templates
-    this.widgetPreviewService.loadAvailableTemplates();
-    
-    // Handle fullscreen changes
-    this.handleFullscreenChanges();
+    // Check for payment success in URL parameters
+    this.checkPaymentStatus();
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+    // The effect will be automatically cleaned up when the component is destroyed
   }
 
   // Actions
@@ -111,12 +130,20 @@ export class WidgetPreviewComponent implements OnInit, OnDestroy {
       // Set the current widget ID to load from widget store
       this.currentWidgetId.set(widgetId);
       
-      // Also load in the preview service for device size management
-      this.widgetPreviewService.loadWidget(widgetId);
+      // Note: We're not calling widgetPreviewService.loadWidget anymore since
+      // we're using the widget store which gets data from the mock API
       
       this.isLoading.set(false);
-    } catch (err) {
-      this.error.set('Failed to load widget');
+    } catch (err: unknown) {
+      // Properly handle the unknown error type
+      let errorMessage = 'Unknown error';
+      if (err instanceof Error) {
+        errorMessage = err.message;
+      } else if (typeof err === 'string') {
+        errorMessage = err;
+      }
+      
+      this.error.set('Failed to load widget: ' + errorMessage);
       this.isLoading.set(false);
       console.error('Error loading widget:', err);
     }
@@ -131,7 +158,8 @@ export class WidgetPreviewComponent implements OnInit, OnDestroy {
   }
 
   toggleFullscreen(): void {
-    this.isFullscreen.update(current => !current);
+    const newValue = !this.isFullscreen();
+    this.isFullscreen.set(newValue);
     this.widgetPreviewService.toggleFullscreen();
   }
 
@@ -146,6 +174,74 @@ export class WidgetPreviewComponent implements OnInit, OnDestroy {
     }
   }
 
+  // Payment functionality
+  async processPayment(): Promise<void> {
+    const widgetId = this.currentWidgetId();
+    if (!widgetId) {
+      this.error.set('No widget selected for payment');
+      return;
+    }
+
+    try {
+      this.isLoading.set(true);
+      
+      // Get current URL for success/cancel callbacks
+      const currentUrl = window.location.origin + this.router.createUrlTree([], { 
+        relativeTo: this.route 
+      }).toString();
+      
+      const successUrl = `${currentUrl}?payment=success`;
+      const cancelUrl = `${currentUrl}?payment=cancelled`;
+      
+      // Create checkout session using the payment service
+      const response = await firstValueFrom(
+        this.paymentService.createCheckoutSession({
+          widgetId,
+          successUrl,
+          cancelUrl
+        })
+      );
+      
+      if (response && response.url) {
+        // Redirect to Stripe checkout
+        window.location.href = response.url;
+      } else {
+        throw new Error('Failed to create payment session');
+      }
+    } catch (err: unknown) {
+      // Properly handle the unknown error type
+      let errorMessage = 'Unknown error';
+      if (err instanceof Error) {
+        errorMessage = err.message;
+      } else if (typeof err === 'string') {
+        errorMessage = err;
+      } else if (err && typeof err === 'object' && 'message' in err) {
+        errorMessage = (err as { message: string }).message;
+      }
+      
+      this.error.set('Failed to process payment: ' + errorMessage);
+      this.isLoading.set(false);
+      console.error('Payment error:', err);
+    }
+  }
+
+  private checkPaymentStatus(): void {
+    const urlParams = new URLSearchParams(window.location.search);
+    const paymentStatus = urlParams.get('payment');
+    const sessionId = urlParams.get('session_id');
+    
+    if (paymentStatus === 'success' && sessionId) {
+      this.paymentProcessed.set(true);
+      this.sessionId.set(sessionId);
+      // Remove URL parameters
+      window.history.replaceState({}, document.title, window.location.pathname);
+    } else if (paymentStatus === 'cancelled') {
+      this.error.set('Payment was cancelled. Please try again.');
+      // Remove URL parameters
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }
+
   // Helper methods
   private getCurrentWidget(): WidgetInstance | null {
     let widget: WidgetInstance | null = null;
@@ -157,22 +253,6 @@ export class WidgetPreviewComponent implements OnInit, OnDestroy {
     let deviceSize: DeviceSize = this.widgetPreviewService.deviceSizes[0];
     this.currentDeviceSize$.pipe(takeUntil(this.destroy$)).subscribe(ds => deviceSize = ds);
     return deviceSize;
-  }
-
-  private handleFullscreenChanges(): void {
-    // Listen for fullscreen changes and update UI accordingly
-    effect(() => {
-      const isFullscreen = this.isFullscreen();
-      if (isFullscreen) {
-        document.body.classList.add('preview-fullscreen');
-        this.showDeviceToggle.set(false);
-        this.showTemplateSwitcher.set(false);
-      } else {
-        document.body.classList.remove('preview-fullscreen');
-        this.showDeviceToggle.set(true);
-        this.showTemplateSwitcher.set(true);
-      }
-    });
   }
 
   // Template helpers
@@ -194,6 +274,16 @@ export class WidgetPreviewComponent implements OnInit, OnDestroy {
   }
 
   getTemplateDescription(template: WidgetInstance): string {
+    const blockCount = template.columns.reduce((total, col) => total + col.blocks.length, 0);
+    return `${template.columns.length} columns, ${blockCount} blocks`;
+  }
+
+  // Template helpers for WidgetTemplate
+  getTemplateTemplateName(template: WidgetTemplate): string {
+    return template.name || 'Unnamed Template';
+  }
+
+  getTemplateTemplateDescription(template: WidgetTemplate): string {
     const blockCount = template.columns.reduce((total, col) => total + col.blocks.length, 0);
     return `${template.columns.length} columns, ${blockCount} blocks`;
   }

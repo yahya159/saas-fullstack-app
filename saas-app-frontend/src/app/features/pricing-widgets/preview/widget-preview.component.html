@@ -9,6 +9,15 @@
     </div>
     
     <div class="header-right">
+      <!-- Payment Button - Only show if payment hasn't been processed -->
+      <button 
+        class="btn btn-success" 
+        (click)="processPayment()" 
+        *ngIf="!paymentProcessed() && currentWidgetId()"
+        [disabled]="isLoading()">
+        💳 Pay $5.00 to Preview
+      </button>
+      
       <button class="btn btn-outline" (click)="refreshPreview()" title="Refresh Preview (Ctrl+R)">
         🔄 Refresh
       </button>
@@ -18,8 +27,20 @@
     </div>
   </header>
 
+  <!-- Payment Required Message -->
+  <div class="payment-required" *ngIf="!paymentProcessed() && currentWidgetId()">
+    <div class="payment-content">
+      <h2>🔒 Preview Access Required</h2>
+      <p>To preview this widget, a one-time payment of $5.00 is required.</p>
+      <button class="btn btn-success btn-lg" (click)="processPayment()" [disabled]="isLoading()">
+        💳 Pay $5.00 to Unlock Preview
+      </button>
+      <p class="payment-note">This is a demo implementation. In a production environment, pricing would be configurable per widget.</p>
+    </div>
+  </div>
+
   <!-- Device Toggle Controls -->
-  <div class="device-controls" *ngIf="showDeviceToggle()" data-testid="device-controls">
+  <div class="device-controls" *ngIf="showDeviceToggle() && paymentProcessed()" data-testid="device-controls">
     <div class="device-toggle">
       <h3>Device Preview</h3>
       <div class="device-buttons">
@@ -38,17 +59,17 @@
   </div>
 
   <!-- Template Switcher -->
-  <div class="template-switcher" *ngIf="showTemplateSwitcher()" data-testid="template-switcher">
+  <div class="template-switcher" *ngIf="showTemplateSwitcher() && paymentProcessed()" data-testid="template-switcher">
     <div class="template-controls">
       <h3>Live Templates</h3>
       <div class="template-list">
         <button 
-          *ngFor="let template of availableTemplates$ | async" 
+          *ngFor="let template of availableTemplates$()" 
           class="template-btn"
           (click)="switchToTemplate(template.id)"
-          [title]="getTemplateDescription(template)">
-          <span class="template-name">{{ getTemplateName(template) }}</span>
-          <span class="template-info">{{ getTemplateDescription(template) }}</span>
+          [title]="getTemplateTemplateDescription(template)">
+          <span class="template-name">{{ getTemplateTemplateName(template) }}</span>
+          <span class="template-info">{{ getTemplateTemplateDescription(template) }}</span>
         </button>
       </div>
     </div>
@@ -69,8 +90,8 @@
     </div>
   </div>
 
-  <!-- Preview Frame -->
-  <div class="preview-frame-container" *ngIf="!isLoading() && !error()" data-testid="preview-frame">
+  <!-- Preview Frame - Only show after payment -->
+  <div class="preview-frame-container" *ngIf="paymentProcessed() && !isLoading() && !error()" data-testid="preview-frame">
     <div class="preview-frame" [style]="previewFrameStyle()">
       <div class="preview-content" [innerHTML]="previewHtml()"></div>
     </div>
@@ -85,14 +106,14 @@
   </div>
 
   <!-- Fullscreen Controls -->
-  <div class="fullscreen-controls" *ngIf="isFullscreen()">
+  <div class="fullscreen-controls" *ngIf="isFullscreen() && paymentProcessed()">
     <button class="btn btn-outline fullscreen-exit" (click)="toggleFullscreen()">
       ✕ Exit Fullscreen
     </button>
   </div>
 
   <!-- Keyboard Shortcuts Help -->
-  <div class="shortcuts-help" *ngIf="!isFullscreen()">
+  <div class="shortcuts-help" *ngIf="!isFullscreen() && paymentProcessed()">
     <div class="shortcuts-content">
       <h4>Keyboard Shortcuts</h4>
       <ul>

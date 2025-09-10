@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, combineLatest, map, switchMap, catchError, of } from 'rxjs';
 import { WidgetInstance, Plan } from '../models/pricing.models';
+import { environment } from '../../../environments';
 
 export interface DeviceSize {
   name: string;
@@ -26,7 +27,7 @@ export interface PreviewState {
 })
 export class WidgetPreviewService {
   private http = inject(HttpClient);
-  private baseUrl = 'http://localhost:3000/api/widgets';
+  private baseUrl = `${environment.apiUrl}/widgets`;
 
   // Device sizes for responsive preview
   readonly deviceSizes: DeviceSize[] = [
